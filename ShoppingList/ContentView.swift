@@ -26,7 +26,7 @@ struct ContentView: View {
     @State var isPresented = false
     @State var isPresentingCategorySelector : Bool = false
     @State var selectedCategory: String
-    @State var currentDragOffset : CGFloat = 0
+    @State var currentDragOffset : CGFloat = 1
     @State var isHidden = false
     
     func itemsInputCompletion (newItems: ShoppingList) {
