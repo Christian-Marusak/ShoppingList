@@ -17,7 +17,25 @@ struct AddItems: View {
     var itemsInputCompletion : (ShoppingList) -> Void
     var freeList: Binding<[ShoppingList]>
     @Binding var isPresented: Bool
+    @State var allCategories = ["weight","number of pieces","volume"]
+    @State var weight = ["kg","g","mg","dkg"]
+    @State var volume = ["ml", "l","dkg"]
+    @State var properAmount : Bool = true
     
+    private var foods = [
+        "Ovocie a zelenina",
+        "Mäso a mäsová výrobky",
+        "Mlieko a mliečne výrobky",
+        "Obilniny a pečivo",
+        "Ryby a morské plody",
+        "Vajcia a výrobky z vajec",
+        "Tuky a oleje",
+        "Cukry a sladkosti",
+        "Nápoje",
+        "Korenie a bylinky"
+    ]
+
+    @State private var searchText = ""
     
     var body: some View {
         Form {
@@ -26,11 +44,38 @@ struct AddItems: View {
                 TextField("Category name", text: $newCategory)
             }
             Section("Choose number of items") {
-                Picker("Number of pieces", selection: $newNumber) {
-                    ForEach(0...10, id: \.self) { number in
-                        Text("\(number)")
+                Toggle(isOn: $properAmount.animation(.interactiveSpring)) {
+                    Text("Enter proper amount")
+                }
+                HStack {
+                    if properAmount {
+//                        Picker("Amount", selection: $newNumber) {
+//                            ForEach(0...10, id: \.self) { number in
+//                                Text("\(number)")
+//                            }
+//                        }.pickerStyle(.menu)
+//                            .frame(width: 120, alignment: .trailing)
+                        Stepper("Enter number of pieces", value: $newNumber)
+                            .frame(height: 30)
+                        Text("\(newNumber)")
+                        
+                        Picker("", selection: $allCategories) {
+                            ForEach(allCategories, id: \.self) { number in
+                                Text("\(number)")
+                            }
+                        }.pickerStyle(.menu)
+                        Picker("", selection: $allCategories) {
+                            ForEach(weight, id: \.self) { number in
+                                Text("\(number)")
+                            }
+                        }.pickerStyle(.menu)
+                    } else {
+                        HStack{
+                            Stepper("Enter number of pieces", value: $newNumber)
+                         Text("\(newNumber)")
+                        }
                     }
-                }.pickerStyle(.menu)
+                }
                 Picker("where do you buy it", selection: $selectedShop) {
                     ForEach(ShoppingList.StoreName.allCases, id: \.self) { store in
                         Text(store.rawValue)
