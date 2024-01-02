@@ -20,9 +20,9 @@ struct AddItems: View {
     @State var allCategories = ["weight","number of pieces","volume"]
     @State var weight = ["kg","g","mg","dkg"]
     @State var volume = ["ml", "l","dkg"]
-    @State var properAmount : Bool = true
-    
-    private var foods = [
+    @State var properAmount : Bool = false
+    var none = [""]
+    var catgoriesOfFoods = [
         "Ovocie a zelenina",
         "Mäso a mäsová výrobky",
         "Mlieko a mliečne výrobky",
@@ -34,27 +34,39 @@ struct AddItems: View {
         "Nápoje",
         "Korenie a bylinky"
     ]
-
-    @State private var searchText = ""
-    
+    var filteredCategories: [String] {
+        if newCategory.isEmpty {
+            return catgoriesOfFoods
+        } else {
+            return catgoriesOfFoods.filter { $0.localizedCaseInsensitiveContains(newCategory) }
+        }
+    }
     var body: some View {
         Form {
             Section("Enter item and category") {
                 TextField("Item name", text: $newItem)
                 TextField("Category name", text: $newCategory)
+                if !newCategory.isEmpty {
+                    List {
+                        ForEach(filteredCategories, id: \.self) {result in
+                            NavigationLink(result) {
+                                Text(result)
+                            }.onTapGesture(perform: {
+                                newCategory = result
+                            })
+                        }
+                    }
+                    .searchable(text: $newCategory)
+                }
+                
             }
+            
             Section("Choose number of items") {
                 Toggle(isOn: $properAmount.animation(.interactiveSpring)) {
                     Text("Enter proper amount")
                 }
                 HStack {
                     if properAmount {
-//                        Picker("Amount", selection: $newNumber) {
-//                            ForEach(0...10, id: \.self) { number in
-//                                Text("\(number)")
-//                            }
-//                        }.pickerStyle(.menu)
-//                            .frame(width: 120, alignment: .trailing)
                         Stepper("Enter number of pieces", value: $newNumber)
                             .frame(height: 30)
                         Text("\(newNumber)")
@@ -72,7 +84,7 @@ struct AddItems: View {
                     } else {
                         HStack{
                             Stepper("Enter number of pieces", value: $newNumber)
-                         Text("\(newNumber)")
+                            Text("\(newNumber)")
                         }
                     }
                 }
