@@ -13,15 +13,18 @@ struct AddItems: View {
     @State private var newCategory : String = ""
     @State private var newNumber : Int = 0
     @State private var store: String = ""
+    @State private var properAmountCategory: String = "weight"
+    @State private var properAmountUnit: String = ""
+    
     @State var selectedShop : ShoppingList.StoreName = .none
     var itemsInputCompletion : (ShoppingList) -> Void
     var freeList: Binding<[ShoppingList]>
     @Binding var isPresented: Bool
-    @State var allCategories = ["weight","number of pieces","volume"]
+    @State var allCategories = ["weight","volume"]
     @State var weight = ["kg","g","mg","dkg"]
     @State var volume = ["ml", "l","dkg"]
     @State var properAmount : Bool = false
-    var none = [""]
+    
     var catgoriesOfFoods = [
         "Ovocie a zelenina",
         "Mäso a mäsová výrobky",
@@ -65,22 +68,39 @@ struct AddItems: View {
                 Toggle(isOn: $properAmount.animation(.interactiveSpring)) {
                     Text("Enter proper amount")
                 }
-                HStack {
+                VStack {
                     if properAmount {
-                        Stepper("Enter number of pieces", value: $newNumber)
-                            .frame(height: 30)
-                        Text("\(newNumber)")
+                        Picker("", selection: $properAmountCategory) {
+                            ForEach(allCategories, id: \.self) { category in
+                                Text(category)
+                            }
+                        }.pickerStyle(.segmented)
                         
-                        Picker("", selection: $allCategories) {
-                            ForEach(allCategories, id: \.self) { number in
-                                Text("\(number)")
+                        if properAmountCategory == "weight" {
+                            
+                            HStack {
+                                Stepper("", value: $newNumber)
+                                Text("\(newNumber)")
+                                
+                                Picker("", selection: $properAmountUnit) {
+                                    ForEach(weight, id: \.self) { number in
+                                        Text("\(number)")
+                                    }
+                                }.pickerStyle(.menu)
                             }
-                        }.pickerStyle(.menu)
-                        Picker("", selection: $allCategories) {
-                            ForEach(weight, id: \.self) { number in
-                                Text("\(number)")
+                        } else if properAmountCategory == "volume" {
+                            
+                            HStack {
+                                Stepper("", value: $newNumber)
+                                Text("\(newNumber)")
+                                
+                                Picker("", selection: $properAmountUnit) {
+                                    ForEach(volume, id: \.self) { number in
+                                        Text("\(number)")
+                                    }
+                                }.pickerStyle(.menu)
                             }
-                        }.pickerStyle(.menu)
+                        }
                     } else {
                         HStack{
                             Stepper("Enter number of pieces", value: $newNumber)
