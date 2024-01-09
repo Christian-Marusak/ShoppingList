@@ -20,12 +20,6 @@ struct ShoppingProduct: View {
     
     
     var body: some View {
-        
-//        RoundedRectangle(cornerRadius: 15)
-////            .stroke(Color.black, lineWidth: 3)
-//            .fill(ShoppingList.gradientForStore(store: store))
-//            .frame(height: rectangleHeight)
-//            .overlay {
                 HStack(alignment: .center, content: {
                     Toggle(isOn: $isBought, label: {
                         Image(systemName: isBought ? "checkmark.circle.fill" : "checkmark.circle" )
@@ -33,37 +27,24 @@ struct ShoppingProduct: View {
                         .onChange(of: isBought) { oldValue, newValue in
                             print("current status is \(newValue), old status is \(oldValue)")
                         }
+                        .padding(.leading, -10)
+                    Spacer()
                     Text(product)
                         .bold()
                         .font(.system(size: 15))
+//                        .frame(width: 150,height: 30,alignment: .center)
+                    Spacer()
                     Text(String(number))
-                        .foregroundColor(textColorForStore(store: store))
                         .frame(alignment: .center)
                         .font(.system(size: 15))
                         Text(String(value))
-                            .foregroundColor(textColorForStore(store: store))
                             .frame(alignment: .center)
                             .font(.system(size: 15))
+//                            .padding(.trailing, 30)
                     })
-                
-//            }
     }
     private func textColorForStore(store: ShoppingList.StoreName) -> Color {
         switch store {
-//        case .Tesco:
-//            return Color.black
-//        case .none:
-//            return Color.white
-//        case .Billa:
-//            return Color.white
-//        case .Malina:
-//            return Color.black
-//        case .Lidl:
-//            return Color.white
-//        case .Coop:
-//            return Color.black
-//        case .Biedronka:
-//            return Color.white
     default:
         return Color.black
         }
@@ -72,5 +53,5 @@ struct ShoppingProduct: View {
 }
 
 #Preview {
-    ShoppingProduct(isBought: true, value: "kg", product: "Plnotučný jogurt", category: "Mliečne výrobky", number: 3, store: .Billa, categories: .bakery)
+    ShoppingProduct(isBought: true, value: "kg", product: "Plnotučný jogurt ", category: "Mliečne výrobky", number: 3, store: .Billa, categories: .bakery)
 }

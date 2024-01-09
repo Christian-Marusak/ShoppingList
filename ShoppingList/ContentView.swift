@@ -96,24 +96,7 @@ struct ContentView: View {
     
     var body: some View {
         Text("Shopping List").font(.largeTitle).bold()
-//        HStack{
-//            Button{
-//                isPresentingCategorySelector.toggle()
-//            } label:{
-//                Image(systemName: "list.bullet")
-//            }.buttonStyle(.borderedProminent)
-//            Button {
-//                ShoppingList.isBought.toggle()
-//            } label:{
-//                Image(systemName: ShoppingList.isBought ? "eye.slash" : "eye").animation(.interactiveSpring, value: ShoppingList.isBought)
-//            }.buttonStyle(.borderedProminent)
-//            Button {
-//                
-//            } label:{
-//                Image(systemName: "building")
-//            }.buttonStyle(.borderedProminent)
-//            
-//        }
+            .padding(.top, 5)
         List {
             
             ForEach(sortAndGroupList(by: selectedCategory), id: \.self) { groupedSection in
@@ -130,41 +113,31 @@ struct ContentView: View {
                         )
                     }
                 }
-            }
-//            .onDelete(perform: { indexSet in
-//                myShopping.remove(atOffsets: indexSet)
-//                print("Deleting items at indices: \(indexSet)")
-//                print("Updated yourItems: \(ShoppingList.self)")
-//            })
-            .onDelete(perform: { indexSet in
-                let sortedList = sortAndGroupList(by: selectedCategory).flatMap { $0 }
+            }.onDelete(perform: { indexSet in
+                                let sortedList = sortAndGroupList(by: selectedCategory).flatMap { $0 }
                 
-                // Get the UUIDs of the items to be deleted
-                let uuidsToDelete = indexSet.map { sortedList[$0].id }
+                                // Get the UUIDs of the items to be deleted
+                                let uuidsToDelete = indexSet.map { sortedList[$0].id }
                 
-                // Update myShopping by filtering out items with matching UUIDs
-                myShopping = myShopping.filter { !uuidsToDelete.contains($0.id) }
+                                // Update myShopping by filtering out items with matching UUIDs
+                                myShopping = myShopping.filter { !uuidsToDelete.contains($0.id) }
                 
-                print("Deleting items with UUIDs: \(uuidsToDelete)")
-                print("Updated myShopping: \(myShopping)")
-            })
-
-
-            .environment(\.defaultMinListRowHeight, 50)
-            .listStyle(.plain)
+                                print("Deleting items with UUIDs: \(uuidsToDelete)")
+                            })
+        }.padding(.top, -10)
+//
             .sheet(isPresented: $isPresented, content: {
-                AddItems(itemsInputCompletion: itemsInputCompletion, freeList: $myShopping, isPresented: $isPresented)
+                AddItems(properAmountUnit: value, itemsInputCompletion: itemsInputCompletion, freeList: $myShopping, isPresented: $isPresented)
             })
             Button("Add item") {
                 isPresented.toggle()
             }.buttonStyle(.bordered)
                 .buttonBorderShape(.capsule)
                 .animation(.interactiveSpring, value: isPresented)
-            
         }
         
-    }
 }
+
 
 #Preview {
     ContentView(selectedCategory: .bakery)

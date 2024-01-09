@@ -13,8 +13,8 @@ struct AddItems: View {
     @State private var newCategory : String = ""
     @State private var newNumber : Int = 0
     @State private var store: String = ""
-    @State private var properAmountCategory: String = "volume"
-    @State private var properAmountUnit: String = ""
+    @State private var properAmountCategory: String = "pieces"
+    @State var properAmountUnit: String
     
     @State var selectedCategory : ShoppingList.Categories = .beverages
     @State var selectedShop : ShoppingList.StoreName = .none
@@ -23,7 +23,7 @@ struct AddItems: View {
     @Binding var isPresented: Bool
     @State var allCategories = [ "pieces" ,"weight","volume"]
     @State var weight = ["kg","g","mg","dkg"]
-    @State var volume = ["ml", "l","dc"]
+    @State var volume = ["ml", "l","dcl"]
     @State var properAmount : Bool = false
     
     var catgoriesOfFoods = [
@@ -80,12 +80,16 @@ struct AddItems: View {
                 Picker("", selection: $properAmountCategory) {
                     ForEach(allCategories, id: \.self) { category in
                         Text(category)
+                    }.onChange(of: properAmountUnit) { oldValue, newValue in
+                        print(properAmountUnit)
                     }
                 }.pickerStyle(.segmented)
                 
                 if properAmountCategory == "pieces" {
                     HStack{
-                        Stepper("Enter number of pieces", value: $newNumber)
+                        Stepper("Enter number of pieces", value: $newNumber).onAppear(perform: {
+                            properAmountUnit = "pcs"
+                        })
                         Text("\(newNumber)")
                         
                     }
@@ -100,7 +104,10 @@ struct AddItems: View {
                             ForEach(weight, id: \.self) { number in
                                 Text("\(number)")
                             }
-                        }.pickerStyle(.menu)
+                        }.onAppear(perform: {
+                            properAmountUnit = "kg"
+                        })
+                        .pickerStyle(.menu)
                     }
                 } else if properAmountCategory == "volume" {
                     
@@ -115,6 +122,10 @@ struct AddItems: View {
                                 Text("\(number)")
                             }
                         }.pickerStyle(.menu)
+                            .onAppear(perform: {
+                                properAmountUnit = "ml"
+                            })
+
                     }
                 }
             }
@@ -139,5 +150,5 @@ struct AddItems: View {
 
 
 #Preview {
-    AddItems(selectedShop: .Coop, itemsInputCompletion: { _ in }, freeList: .constant(([])), isPresented: .constant(false))
+    AddItems(properAmountUnit: "pcs", selectedShop: .Coop, itemsInputCompletion: { _ in }, freeList: .constant(([])), isPresented: .constant(false))
 }
