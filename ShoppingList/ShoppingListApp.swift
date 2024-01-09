@@ -12,7 +12,7 @@ import SwiftUI
 struct ShoppingListApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView(selectedCategory: "")
+            ContentView(selectedCategory: ShoppingList.Categories(rawValue: "") ?? .bakery)
         }
     }
 }

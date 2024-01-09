@@ -9,99 +9,163 @@ import SwiftUI
 struct ContentView: View {
     
     @State var myShopping : [ShoppingList] = [
-        ShoppingList(item: "Jablka", category: "Ovocie", number: 4,store: .Billa),
-        ShoppingList(item: "Hrozno", category: "Ovocie", number: 5,store: .Billa),
-        ShoppingList(item: "Banany", category: "Zelenina", number: 3,store: .Coop),
-        ShoppingList(item: "Banany", category: "Zelenina", number: 3,store: .Coop),
-        ShoppingList(item: "Hrušky", category: "Oriesky", number: 6,store: .Malina),
-        ShoppingList(item: "Kiwi", category: "Maso", number: 2,store: .Tesco),
-        ShoppingList(item: "Jahody", category: "Ovocie", number: 7,store: .Lidl),
-        ShoppingList(item: "Hrušky", category: "Oriesky", number: 6,store: .Coop),
-        ShoppingList(item: "Kiwi", category: "Maso", number: 2,store: .Biedronka),
-        ShoppingList(item: "Jahody", category: "Ovocie", number: 7,store: .Lidl),
-        ShoppingList(item: "Maliny", category: "Ovocie", number: 4,store: .Tesco),
-        ShoppingList(item: "Mlieko", category: "Mlieko", number: 2, store: .Tesco)
+        ShoppingList(item: "Jablka", category: .fruits, number: 4, value: "kg", store: .Billa, isBought: false),
+        ShoppingList(item: "Hrozno", category: .fruits, number: 5, value: "kg", store: .Billa, isBought: false),
+        ShoppingList(item: "Banany", category: .fruits, number: 3, value: "kg", store: .Coop, isBought: false),
+//        ShoppingList(item: "Hrušky", category: .fruits, number: 6, value: "kg", store: .Malina, isBought: false),
+//        ShoppingList(item: "Kiwi", category: .fruits, number: 2, value: "kg", store: .Tesco, isBought: false),
+//        ShoppingList(item: "Jahody", category: .fruits, number: 7, value: "kg", store: .Lidl, isBought: false),
+//        ShoppingList(item: "Maliny", category: .fruits, number: 4, value: "kg", store: .Tesco, isBought: false),
+//        ShoppingList(item: "Mlieko", category: .milk, number: 2, value: "l", store: .Tesco, isBought: false),
+//        ShoppingList(item: "Rajčiny", category: .vegetables, number: 3, value: "kg", store: .Coop, isBought: false),
+//        ShoppingList(item: "Cibuľa", category: .vegetables, number: 2, value: "kg", store: .Biedronka, isBought: false),
+//        ShoppingList(item: "Baklažán", category: .vegetables, number: 1, value: "kg", store: .Lidl, isBought: false),
+//        ShoppingList(item: "Kuracie prsia", category: .meat, number: 2, value: "kg", store: .Biedronka, isBought: false),
+        ShoppingList(item: "Hovädzie mäso", category: .meat, number: 3, value: "kg", store: .Tesco, isBought: false),
+        ShoppingList(item: "Klobása", category: .meatProducts, number: 2, value: "kg", store: .Lidl, isBought: false),
+//        ShoppingList(item: "Plnotučný jogurt", category: .dairyProducts, number: 1, value: "l", store: .Coop, isBought: false),
+//        ShoppingList(item: "Tvaroh", category: .dairyProducts, number: 5, value: "kg", store: .Malina, isBought: false),
+//        ShoppingList(item: "Hrozienka", category: .cereals, number: 3, value: "kg", store: .Tesco, isBought: false),
+//        ShoppingList(item: "Celozrnný chlieb", category: .bakery, number: 1, value: "ks", store: .Lidl, isBought: false),
+//        ShoppingList(item: "Losos", category: .fish, number: 5, value: "kg", store: .Billa, isBought: false),
+//        ShoppingList(item: "Mušle", category: .seafood, number: 1, value: "kg", store: .Tesco, isBought: false),
+//        ShoppingList(item: "Vajcia", category: .eggs, number: 12, value: "ks", store: .Coop, isBought: false),
+//        ShoppingList(item: "Vajcový šalát", category: .eggProducts, number: 2, value: "kg", store: .Biedronka, isBought: false),
+//        ShoppingList(item: "Maslo", category: .fatsAndOils, number: 25, value: "kg", store: .Malina, isBought: false),
+//        ShoppingList(item: "Olivový olej", category: .fatsAndOils, number: 5, value: "l", store: .Tesco, isBought: false),
+//        ShoppingList(item: "Čokoláda", category: .sugarsAndSweets, number: 2, value: "ks", store: .Lidl, isBought: false),
+//        ShoppingList(item: "Med", category: .sugarsAndSweets, number: 3, value: "kg", store: .Billa, isBought: false),
+//        ShoppingList(item: "Zelený čaj", category: .beverages, number: 1, value: "ks.", store: .Coop, isBought: false),
+//        ShoppingList(item: "Korenie", category: .herbsAndSpices, number: 1, value: "ks", store: .Biedronka, isBought: false),
+//        ShoppingList(item: "Petržlen", category: .herbsAndSpices, number: 1, value: "kg", store: .Tesco, isBought: false)
     ]
     
     @State var isPresented = false
     @State var isPresentingCategorySelector : Bool = false
-    @State var selectedCategory: String
+    @State var selectedCategory: ShoppingList.Categories
     @State var currentDragOffset : CGFloat = 1
-    @State var isHidden = false
+    @State var value = "ml"
     
     func itemsInputCompletion (newItems: ShoppingList) {
         myShopping.append(newItems)
     }
-    func sortCategories(myList: [ShoppingList], selectedCategory: String) -> [ShoppingList] {
-        var sortedList = myList
-        
-//MARK: Sort the list based on the selected category
-        
-        sortedList.sort { item1, item2 in
-            if item1.category == selectedCategory {
-                return true
-            } else if item2.category == selectedCategory {
-                return false
-            } else {
-                return item1.category < item2.category
-            }
+    
+    // Function to get the category header for a section
+    func getCategoryHeader(from section: [ShoppingList]) -> AnyView {
+        if let firstItem = section.first {
+            return AnyView(Text(ShoppingList.getCategoriesAsString(for: firstItem.category)))
+        } else {
+            return AnyView(EmptyView())
         }
-        return sortedList
     }
 
+
+
     
-//MARK: Main content / List of items
+    func sortAndGroupList(by selectedCategory: ShoppingList.Categories? = nil) -> [[ShoppingList]] {
+        var groupedItems = Dictionary<ShoppingList.Categories, [ShoppingList]>()
+        
+        // Sort the list
+        let sortedList = myShopping.sorted { item1, item2 in
+            let category1 = item1.category
+            let category2 = item2.category
+            
+            if category1 == selectedCategory {
+                return true
+            } else if category2 == selectedCategory {
+                return false
+            } else {
+                return category1.rawValue < category2.rawValue
+            }
+        }
+        
+        // Group the sorted list by category
+        for item in sortedList {
+            let category = item.category
+            groupedItems[category, default: []].append(item)
+        }
+        
+        // Convert the dictionary values to an array of arrays
+        let groupedArray = groupedItems.values.map { $0 }
+        
+        return groupedArray
+    }
+    
+    
+    //MARK: Main content / List of items
     
     var body: some View {
-            Text("Shopping List").font(.largeTitle).bold()
-            HStack{
-                Button{
-                    isPresentingCategorySelector.toggle()
-                } label:{
-                    Image(systemName: "list.bullet")
-                }.buttonStyle(.borderedProminent)
-                Button {
-                    isHidden.toggle()
-                } label:{
-                    Image(systemName: isHidden ? "eye.slash" : "eye").animation(.interactiveSpring, value: isHidden)
-                }.buttonStyle(.borderedProminent)
-                Button {
-                    
-                } label:{
-                    Image(systemName: "building")
-                }.buttonStyle(.borderedProminent)
-                
+        Text("Shopping List").font(.largeTitle).bold()
+//        HStack{
+//            Button{
+//                isPresentingCategorySelector.toggle()
+//            } label:{
+//                Image(systemName: "list.bullet")
+//            }.buttonStyle(.borderedProminent)
+//            Button {
+//                ShoppingList.isBought.toggle()
+//            } label:{
+//                Image(systemName: ShoppingList.isBought ? "eye.slash" : "eye").animation(.interactiveSpring, value: ShoppingList.isBought)
+//            }.buttonStyle(.borderedProminent)
+//            Button {
+//                
+//            } label:{
+//                Image(systemName: "building")
+//            }.buttonStyle(.borderedProminent)
+//            
+//        }
+        List {
+            
+            ForEach(sortAndGroupList(by: selectedCategory), id: \.self) { groupedSection in
+                Section(header: getCategoryHeader(from: groupedSection)) {
+                    ForEach(groupedSection, id: \.self) { item in
+                        ShoppingProduct(
+                            isBought: item.isBought,
+                            value: item.value,
+                            product: item.item,
+                            category: item.category.rawValue,
+                            number: item.number,
+                            store: item.store,
+                            categories: item.category
+                        )
+                    }
+                }
             }
-            List {
-                ForEach(sortCategories(myList: myShopping, selectedCategory: selectedCategory )) { index in
-                    ShoppingProduct(isHidden: $isHidden, product: index.item, category: index.category, number: index.number, store: index.store )
-                }
-                .onDelete(perform: { indexSet in
-                    myShopping.remove(atOffsets: indexSet)
-                    print("Deleting items at indices: \(indexSet)")
-                    print("Updated yourItems: \(ShoppingList.self)")
-                })
-            }.environment(\.defaultMinListRowHeight, 50)
-                .listStyle(.plain)
-                .sheet(isPresented: $isPresented, content: {
-                    AddItems(itemsInputCompletion: itemsInputCompletion, freeList: $myShopping, isPresented: $isPresented)
-                })
-                .sheet(isPresented: $isPresentingCategorySelector) {
-                    CategorySelectorView(categories: Set(myShopping.map { $0.category }), isPresentingCategory: $isPresentingCategorySelector, selectedCategory: $selectedCategory)
-                        .presentationDetents([.height(250)])
-                        .presentationDragIndicator(.hidden)
-                }
+//            .onDelete(perform: { indexSet in
+//                myShopping.remove(atOffsets: indexSet)
+//                print("Deleting items at indices: \(indexSet)")
+//                print("Updated yourItems: \(ShoppingList.self)")
+//            })
+            .onDelete(perform: { indexSet in
+                let sortedList = sortAndGroupList(by: selectedCategory).flatMap { $0 }
+                
+                // Get the UUIDs of the items to be deleted
+                let uuidsToDelete = indexSet.map { sortedList[$0].id }
+                
+                // Update myShopping by filtering out items with matching UUIDs
+                myShopping = myShopping.filter { !uuidsToDelete.contains($0.id) }
+                
+                print("Deleting items with UUIDs: \(uuidsToDelete)")
+                print("Updated myShopping: \(myShopping)")
+            })
+
+
+            .environment(\.defaultMinListRowHeight, 50)
+            .listStyle(.plain)
+            .sheet(isPresented: $isPresented, content: {
+                AddItems(itemsInputCompletion: itemsInputCompletion, freeList: $myShopping, isPresented: $isPresented)
+            })
             Button("Add item") {
                 isPresented.toggle()
             }.buttonStyle(.bordered)
                 .buttonBorderShape(.capsule)
                 .animation(.interactiveSpring, value: isPresented)
-
+            
+        }
+        
     }
 }
 
-
-
 #Preview {
-    ContentView(selectedCategory: "")
+    ContentView(selectedCategory: .bakery)
 }
