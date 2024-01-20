@@ -12,11 +12,17 @@ struct ShoppingProduct: View {
     var value : String
     var product : String
     var category: String
-    var number: Int
+    var number: Double
     var rectangleHeight: CGFloat = 60
     var store: ShoppingList.StoreName
     var categories: ShoppingList.Categories
     var backroundColor : Bool = false
+    var formattedNumber: String {
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 2
+        return formatter.string(from: NSNumber(value: number)) ?? ""
+    }
     
     
     var body: some View {
@@ -34,7 +40,7 @@ struct ShoppingProduct: View {
                         .font(.system(size: 15))
 //                        .frame(width: 150,height: 30,alignment: .center)
                     Spacer()
-                    Text(String(number))
+                    Text(String(formattedNumber))
                         .frame(alignment: .center)
                         .font(.system(size: 15))
                         Text(String(value))
@@ -53,5 +59,5 @@ struct ShoppingProduct: View {
 }
 
 #Preview {
-    ShoppingProduct(isBought: true, value: "kg", product: "Plnotučný jogurt ", category: "Mliečne výrobky", number: 3, store: .Billa, categories: .bakery)
+    ShoppingProduct(isBought: true, value: "kg", product: "Plnotučný jogurt ", category: "Mliečne výrobky", number: 3.0, store: .Billa, categories: .bakery)
 }

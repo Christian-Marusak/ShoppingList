@@ -12,8 +12,8 @@ import SwiftUI
 struct ShoppingListApp: App {
     var body: some Scene {
         WindowGroup {
-//            ContentView(selectedCategory: ShoppingList.Categories(rawValue: "") ?? .bakery)
-            HoldForMoreView()
+            ContentView(selectedCategory: ShoppingList.Categories(rawValue: "") ?? .bakery)
+//            HoldForMoreView()
         }
     }
 }

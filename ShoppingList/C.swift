@@ -6,3 +6,6 @@
 //
 
 import Foundation
+struct C {
+    static var userDefaultsKey = "UserDefaults"
+}

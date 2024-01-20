@@ -9,9 +9,9 @@ import SwiftUI
 struct ContentView: View {
     
     @State var myShopping : [ShoppingList] = [
-        ShoppingList(item: "Jablka", category: .fruits, number: 4, value: "kg", store: .Billa, isBought: false),
-        ShoppingList(item: "Hrozno", category: .fruits, number: 5, value: "kg", store: .Billa, isBought: false),
-        ShoppingList(item: "Banany", category: .fruits, number: 3, value: "kg", store: .Coop, isBought: false),
+//        ShoppingList(item: "Jablka", category: .fruits, number: 4, value: "kg", store: .Billa, isBought: false),
+//        ShoppingList(item: "Hrozno", category: .fruits, number: 5, value: "kg", store: .Billa, isBought: false),
+//        ShoppingList(item: "Banany", category: .fruits, number: 3, value: "kg", store: .Coop, isBought: false),
 //        ShoppingList(item: "Hrušky", category: .fruits, number: 6, value: "kg", store: .Malina, isBought: false),
 //        ShoppingList(item: "Kiwi", category: .fruits, number: 2, value: "kg", store: .Tesco, isBought: false),
 //        ShoppingList(item: "Jahody", category: .fruits, number: 7, value: "kg", store: .Lidl, isBought: false),
@@ -21,8 +21,8 @@ struct ContentView: View {
 //        ShoppingList(item: "Cibuľa", category: .vegetables, number: 2, value: "kg", store: .Biedronka, isBought: false),
 //        ShoppingList(item: "Baklažán", category: .vegetables, number: 1, value: "kg", store: .Lidl, isBought: false),
 //        ShoppingList(item: "Kuracie prsia", category: .meat, number: 2, value: "kg", store: .Biedronka, isBought: false),
-        ShoppingList(item: "Hovädzie mäso", category: .meat, number: 3, value: "kg", store: .Tesco, isBought: false),
-        ShoppingList(item: "Klobása", category: .meatProducts, number: 2, value: "kg", store: .Lidl, isBought: false),
+//        ShoppingList(item: "Hovädzie mäso", category: .meat, number: 3, value: "kg", store: .Tesco, isBought: false),
+//        ShoppingList(item: "Klobása", category: .meatProducts, number: 2, value: "kg", store: .Lidl, isBought: false),
 //        ShoppingList(item: "Plnotučný jogurt", category: .dairyProducts, number: 1, value: "l", store: .Coop, isBought: false),
 //        ShoppingList(item: "Tvaroh", category: .dairyProducts, number: 5, value: "kg", store: .Malina, isBought: false),
 //        ShoppingList(item: "Hrozienka", category: .cereals, number: 3, value: "kg", store: .Tesco, isBought: false),
@@ -43,8 +43,9 @@ struct ContentView: View {
     @State var isPresented = false
     @State var isPresentingCategorySelector : Bool = false
     @State var selectedCategory: ShoppingList.Categories
-    @State var currentDragOffset : CGFloat = 1
     @State var value = "ml"
+    @State var isOrdered = true
+    let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     func itemsInputCompletion (newItems: ShoppingList) {
         myShopping.append(newItems)
@@ -59,7 +60,33 @@ struct ContentView: View {
         }
     }
 
-
+    func saveShoppingList() {
+        do {
+            let encodedData = try JSONEncoder().encode(myShopping)
+            print(encodedData)
+            UserDefaults.standard.set(encodedData, forKey: C.userDefaultsKey)
+        } catch {
+            print("Error encoding shopping list: \(error.localizedDescription)")
+        }
+    }
+    
+    // Add a function to load myShopping from UserDefaults
+    func loadShoppingList() {
+        if let encodedData = UserDefaults.standard.data(forKey: C.userDefaultsKey) {
+            do {
+                myShopping = try JSONDecoder().decode([ShoppingList].self, from: encodedData)
+            } catch {
+                print("Error decoding shopping list: \(error.localizedDescription)")
+            }
+        }
+    }
+    class AppDelegate: NSObject, UIApplicationDelegate {
+        func applicationWillTerminate(_ application: UIApplication) {
+            // Save your data when the app is about to terminate
+            ContentView( selectedCategory: .bakery).saveShoppingList()
+            print("Terminated and saved")
+        }
+    }
 
     
     func sortAndGroupList(by selectedCategory: ShoppingList.Categories? = nil) -> [[ShoppingList]] {
@@ -91,14 +118,24 @@ struct ContentView: View {
         return groupedArray
     }
     
-    
     //MARK: Main content / List of items
     
     var body: some View {
         Text("Shopping List").font(.largeTitle).bold()
             .padding(.top, 5)
+        
+        Button(action: {
+            isOrdered.toggle()
+            feedbackGenerator.impactOccurred()
+        }, label: {
+            Image(systemName: isOrdered ? "chart.bar.doc.horizontal.fill" : "chart.bar.doc.horizontal")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 20)
+                .padding(.bottom)
+        })
         List {
-            
+                        if isOrdered {
             ForEach(sortAndGroupList(by: selectedCategory), id: \.self) { groupedSection in
                 Section(header: getCategoryHeader(from: groupedSection)) {
                     ForEach(groupedSection, id: \.self) { item in
@@ -114,31 +151,57 @@ struct ContentView: View {
                     }
                 }
             }.onDelete(perform: { indexSet in
-                                let sortedList = sortAndGroupList(by: selectedCategory).flatMap { $0 }
+                let sortedList = sortAndGroupList(by: selectedCategory).flatMap { $0 }
                 
-                                // Get the UUIDs of the items to be deleted
-                                let uuidsToDelete = indexSet.map { sortedList[$0].id }
+                // Get the UUIDs of the items to be deleted
+                let uuidsToDelete = indexSet.map { sortedList[$0].id }
                 
-                                // Update myShopping by filtering out items with matching UUIDs
-                                myShopping = myShopping.filter { !uuidsToDelete.contains($0.id) }
+                // Update myShopping by filtering out items with matching UUIDs
+                myShopping = myShopping.filter { !uuidsToDelete.contains($0.id) }
                 
-                                print("Deleting items with UUIDs: \(uuidsToDelete)")
+                print("Deleting items with UUIDs: \(uuidsToDelete)")
+            })
+                        } else {
+                            ForEach(myShopping, id: \.self) { item in
+                                ShoppingProduct(
+                                    isBought: item.isBought,
+                                    value: item.value,
+                                    product: item.item,
+                                    category: item.category.rawValue,
+                                    number: item.number,
+                                    store: item.store,
+                                    categories: item.category)
+                            }.onDelete(perform: { indexSet in
+                                myShopping.remove(atOffsets: indexSet)
                             })
-        }.padding(.top, -10)
+                        }
+        }.onChange(of: myShopping, { oldValue, newValue in
+            print("Changed and saved")
+            saveShoppingList()
+        })
+        .onAppear {
+            loadShoppingList()
+            print("Showing and loading")
+        }
+        .onDisappear {
+            print("Disaperaing and saveing")
+            saveShoppingList()
+        }
+        .padding(.top, -10)
 //
             .sheet(isPresented: $isPresented, content: {
-                AddItems(properAmountUnit: value, itemsInputCompletion: itemsInputCompletion, freeList: $myShopping, isPresented: $isPresented)
+                AddItems(properAmountUnit: value, isPresented: $isPresented, itemsInputCompletion: itemsInputCompletion, freeList: $myShopping)
             })
             Button("Add item") {
                 isPresented.toggle()
             }.buttonStyle(.bordered)
                 .buttonBorderShape(.capsule)
                 .animation(.interactiveSpring, value: isPresented)
-        }
+    }
         
 }
 
 
 #Preview {
-    ContentView(selectedCategory: .bakery)
+    ContentView( selectedCategory: .bakery)
 }

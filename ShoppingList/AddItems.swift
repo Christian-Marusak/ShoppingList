@@ -12,49 +12,25 @@ struct AddItems: View {
     @State private var newItem : String = ""
     @State private var newCategory : String = ""
     @State private var newNumber : Int = 0
-    @State private var store: String = ""
-    @State private var properAmountCategory: String = "pieces"
-    @State var properAmountUnit: String
-    
+    @State private var newSecondNumber : Int = 0
+    @State var properAmountUnit: String = ""
+    @State var comaNumber: Bool = false
+    @Binding var isPresented: Bool
     @State var selectedCategory : ShoppingList.Categories = .beverages
     @State var selectedShop : ShoppingList.StoreName = .none
     var itemsInputCompletion : (ShoppingList) -> Void
     var freeList: Binding<[ShoppingList]>
-    @Binding var isPresented: Bool
-    @State var allCategories = [ "pieces" ,"weight","volume"]
-    @State var weight = ["kg","g","mg","dkg"]
-    @State var volume = ["ml", "l","dcl"]
-    @State var properAmount : Bool = false
     
-    var catgoriesOfFoods = [
-        "Ovocie",
-        "Zelenina",
-        "Mäso",
-        "Mäsové výrobky",
-        "Mlieko",
-        "Mliečne výrobky",
-        "Obilniny",
-        "Pečivo",
-        "Ryby",
-        "Morské plody",
-        "Vajcia",
-        "Výrobky z vajec",
-        "Tuky a oleje",
-        "Cukry a sladkosti",
-        "Nápoje",
-        "Korenie a bylinky",
-        "Drogéria",
-        "Iné",
-    ]
-    var filteredCategories: [String] {
-        if newCategory.isEmpty {
-            return catgoriesOfFoods
-        } else {
-            return catgoriesOfFoods.filter { $0.localizedCaseInsensitiveContains(newCategory) }
-        }
+    
+    @State var allUnits = ["kg","g","mg","dkg","ml", "l","dcl","pieces"]
+    
+    var completedNumber : Double {
+        print(newNumber , newSecondNumber)
+            return Double("\(newNumber).\(newSecondNumber)") ?? 0.28
     }
+    
     var body: some View {
-        Form {
+        Form(content:  {
             Section("Enter item and category") {
                 TextField("Item name", text: $newItem)
                 Picker("Category", selection: $selectedCategory) {
@@ -62,93 +38,51 @@ struct AddItems: View {
                         Text(ShoppingList.getCategoriesAsString(for: category))
                     }
                 }.pickerStyle(.menu)
-                if !newCategory.isEmpty {
-                    List {
-                        ForEach(filteredCategories, id: \.self) {result in
-                            NavigationLink(result) {
-                                Text(result)
-                            }.onTapGesture(perform: {
-                                newCategory = result
-                            })
-                        }
-                    }
-                    .searchable(text: $newCategory)
-                }
-                
             }
             Section("Choose number of items") {
-                Picker("", selection: $properAmountCategory) {
-                    ForEach(allCategories, id: \.self) { category in
-                        Text(category)
-                    }.onChange(of: properAmountUnit) { oldValue, newValue in
-                        print(properAmountUnit)
-                    }
-                }.pickerStyle(.segmented)
-                
-                if properAmountCategory == "pieces" {
-                    HStack{
-                        Stepper("Enter number of pieces", value: $newNumber).onAppear(perform: {
-                            properAmountUnit = "pcs"
-                        })
-                        Text("\(newNumber)")
-                        
-                    }
-                }
-                else if properAmountCategory == "weight" {
-                    
-                    HStack {
-                        Stepper("", value: $newNumber)
-                        Text("\(newNumber)")
-                        
-                        Picker("", selection: $properAmountUnit) {
-                            ForEach(weight, id: \.self) { number in
-                                Text("\(number)")
+                HStack{
+                    Picker("", selection: $newNumber) {
+                        ForEach(0...100, id: \.self) { category in
+                            Text("\(category)")
+                        }
+                    }.pickerStyle(.wheel)
+                    Text(",")
+                        Picker("", selection: $newSecondNumber) {
+                            ForEach(0...100, id: \.self) { category in
+                                Text("\(category)")
                             }
-                        }.onAppear(perform: {
-                            properAmountUnit = "kg"
-                        })
-                        .pickerStyle(.menu)
-                    }
-                } else if properAmountCategory == "volume" {
+                        }.pickerStyle(.wheel)
                     
-                    HStack {
-                        Stepper("", value: $newNumber)
-                        Spacer()
-                        Text("\(newNumber)")
-                            .bold()
-                        
-                        Picker("", selection: $properAmountUnit) {
-                            ForEach(volume, id: \.self) { number in
-                                Text("\(number)")
-                            }
-                        }.pickerStyle(.menu)
-                            .onAppear(perform: {
-                                properAmountUnit = "ml"
-                            })
-
-                    }
-                }
+                    
+                    Picker("", selection: $properAmountUnit) {
+                        ForEach(allUnits, id: \.self) { category in
+                            Text(category)
+                        }
+                    }.pickerStyle(.wheel)
+                }.frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
             }
-            Picker("where do you buy it", selection: $selectedShop) {
-                ForEach(ShoppingList.StoreName.allCases, id: \.self) { store in
-                    Text(store.rawValue)
-                }
-            }.pickerStyle(.menu)
-        }
-        Button("Add items to your shopping list"){
-            let list = ShoppingList(item: newItem, category: selectedCategory, number: newNumber, value: properAmountUnit, store: selectedShop)
-            itemsInputCompletion(list)
-            newItem = ""
-            newNumber = 0
-            newCategory = ""
-            properAmountUnit = ""
-            isPresented = false
+                Picker("where do you buy it", selection: $selectedShop) {
+                    ForEach(ShoppingList.StoreName.allCases, id: \.self) { store in
+                        Text(store.rawValue)
+                    }
+                }.pickerStyle(.menu)
             
+            Button("Add items to your shopping list"){
+                let list = ShoppingList(item: newItem, category: selectedCategory, number: completedNumber, value: properAmountUnit, store: selectedShop)
+                itemsInputCompletion(list)
+                print(completedNumber)
+                newItem = ""
+                newNumber = 0
+                newCategory = ""
+                properAmountUnit = ""
+                isPresented = false
+                
+            }
         }
-    }
+    )}
 }
 
 
 #Preview {
-    AddItems(properAmountUnit: "pcs", selectedShop: .Coop, itemsInputCompletion: { _ in }, freeList: .constant(([])), isPresented: .constant(false))
+    AddItems(isPresented: .constant(false), selectedShop: .Coop, itemsInputCompletion: { _ in }, freeList: .constant(([])))
 }

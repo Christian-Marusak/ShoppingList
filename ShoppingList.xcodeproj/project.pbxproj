@@ -12,6 +12,7 @@
 		9627E84D2B065FF70000EE27 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9627E84C2B065FF70000EE27 /* Preview Assets.xcassets */; };
 		965442062B0D190B00780701 /* AddItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 965442052B0D190B00780701 /* AddItems.swift */; };
 		967213A62B17C272000A9AAA /* LiveRecipeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 967213A52B17C272000A9AAA /* LiveRecipeText.swift */; };
+		96732BE52B56E0CB005AE51B /* EditItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96732BE42B56E0CB005AE51B /* EditItemView.swift */; };
 		968A7FE22B0E51F100726061 /* ShoppingProduct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968A7FE12B0E51F100726061 /* ShoppingProduct.swift */; };
 		96994F9B2B28B41B00C376AC /* InputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96994F9A2B28B41B00C376AC /* InputView.swift */; };
 		969D85002B0D2A0A002EE9AB /* ShoppingListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 969D84FF2B0D2A0A002EE9AB /* ShoppingListApp.swift */; };
@@ -20,6 +21,7 @@
 		96A3CF882B4EC4FE006724BB /* HoldForMoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96A3CF872B4EC4FE006724BB /* HoldForMoreView.swift */; };
 		96F0C74B2B2A129D00B7C07D /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0C74A2B2A129D00B7C07D /* SettingsRowView.swift */; };
 		96F0C74D2B2A135F00B7C07D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0C74C2B2A135F00B7C07D /* SettingsView.swift */; };
+		96F627EA2B584DC600ABE110 /* C.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F627E92B584DC600ABE110 /* C.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,7 @@
 		9627E84C2B065FF70000EE27 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		965442052B0D190B00780701 /* AddItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItems.swift; sourceTree = "<group>"; };
 		967213A52B17C272000A9AAA /* LiveRecipeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveRecipeText.swift; sourceTree = "<group>"; };
+		96732BE42B56E0CB005AE51B /* EditItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditItemView.swift; sourceTree = "<group>"; };
 		968A7FE12B0E51F100726061 /* ShoppingProduct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingProduct.swift; sourceTree = "<group>"; };
 		96994F9A2B28B41B00C376AC /* InputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputView.swift; sourceTree = "<group>"; };
 		969D84FF2B0D2A0A002EE9AB /* ShoppingListApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShoppingListApp.swift; sourceTree = "<group>"; };
@@ -38,6 +41,7 @@
 		96A3CF872B4EC4FE006724BB /* HoldForMoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoldForMoreView.swift; sourceTree = "<group>"; };
 		96F0C74A2B2A129D00B7C07D /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
 		96F0C74C2B2A135F00B7C07D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		96F627E92B584DC600ABE110 /* C.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +83,8 @@
 			isa = PBXGroup;
 			children = (
 				9627E8462B065FF60000EE27 /* ContentView.swift */,
+				96F627E92B584DC600ABE110 /* C.swift */,
+				96732BE42B56E0CB005AE51B /* EditItemView.swift */,
 				96A3CF872B4EC4FE006724BB /* HoldForMoreView.swift */,
 				96F0C74C2B2A135F00B7C07D /* SettingsView.swift */,
 				969D85032B0D2E6A002EE9AB /* CategorySelectorView.swift */,
@@ -194,11 +200,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				96F627EA2B584DC600ABE110 /* C.swift in Sources */,
 				9627E8472B065FF60000EE27 /* ContentView.swift in Sources */,
 				969D85042B0D2E6A002EE9AB /* CategorySelectorView.swift in Sources */,
 				969D85022B0D2C4C002EE9AB /* ShoppingList.swift in Sources */,
 				967213A62B17C272000A9AAA /* LiveRecipeText.swift in Sources */,
 				968A7FE22B0E51F100726061 /* ShoppingProduct.swift in Sources */,
+				96732BE52B56E0CB005AE51B /* EditItemView.swift in Sources */,
 				965442062B0D190B00780701 /* AddItems.swift in Sources */,
 				96A3CF882B4EC4FE006724BB /* HoldForMoreView.swift in Sources */,
 				96994F9B2B28B41B00C376AC /* InputView.swift in Sources */,

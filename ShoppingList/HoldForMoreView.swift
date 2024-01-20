@@ -14,7 +14,6 @@ struct HoldForMoreView: View {
     @State private var selectedOption: String?
     @State private var options : [String] = ["rozok","maslo","vodka"]
     
-    
     var body: some View {
         VStack {
             ZStack {
@@ -39,10 +38,6 @@ struct HoldForMoreView: View {
                         DragGesture(minimumDistance: 100)
                             .onChanged { value in
                                 isTouching = true
-                                // Tu môžete implementovať logiku pre zobrazenie 3 položiek podľa potreby
-                                // Napríklad použitím overlay, modálnym zobrazením alebo iným spôsobom.
-                                // V tomto príklade ukazujeme 3 textové položky.
-                                // selectedOption = value.location.y < 50 ? "Položka 1" : value.location.y < 200 ? "Položka 2" : "Položka 3"
                                 if value.location.y >= -180  && value.location.y <= -120 /*&& value.location.x >= -109 && value.location.x <= -39*/ {
                                     print("Prva polozka")
                                     secondTouch = true

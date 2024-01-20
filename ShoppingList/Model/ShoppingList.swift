@@ -11,7 +11,7 @@ struct ShoppingList : Identifiable, Equatable, Codable, Hashable {
     var id = UUID()
     var item = String()
     var category: Categories
-    var number = Int()
+    var number = Double()
     var value = String()
     var store: StoreName
     var isBought = Bool()
