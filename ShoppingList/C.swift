@@ -8,4 +8,8 @@
 import Foundation
 struct C {
     static var userDefaultsKey = "UserDefaults"
+    static var lastUsedCategory = "categoryKey"
+    static var lastUsedShop = "shopKey"
+    static var lastUsedUnit = "unitKey"
+    static var isOrdered = "orderKey"
 }

@@ -28,6 +28,7 @@ struct ShoppingList : Identifiable, Equatable, Codable, Hashable {
         case cereals, fish, seafood, eggs, eggProducts, fatsAndOils, sugarsAndSweets, beverages, herbsAndSpices, toiletries, other, fruits, vegetables, meat, meatProducts, milk, dairyProducts, bakery
     }
     
+    
     static func getCategoriesAsString (for category: Categories) -> String {
         switch category {
         case .cereals: return "Obilniny"
@@ -93,5 +94,30 @@ struct ShoppingList : Identifiable, Equatable, Codable, Hashable {
     
     static func stringForStore(store: StoreName) -> String {
         return store.rawValue
+    }
+//    static func readFromUserDefaults<T>(key: String, defaultValue: T) -> T where T: RawRepresentable, T.RawValue == String {
+//        if let savedValue = UserDefaults.standard.string(forKey: key) {
+//            return T(rawValue: savedValue) ?? defaultValue
+//        } else {
+//            return defaultValue
+//        }
+//    }
+//    
+//    static func saveToUserDefaults<T>(key: String, value: T) where T: RawRepresentable {
+//        UserDefaults.standard.set(value.rawValue, forKey: key)
+//    }
+    static func readFromUserDefaults<T: Codable>(key: String, defaultValue: T) -> T {
+        if let savedData = UserDefaults.standard.data(forKey: key),
+           let savedValue = try? JSONDecoder().decode(T.self, from: savedData) {
+            return savedValue
+        } else {
+            return defaultValue
+        }
+    }
+    
+    static func saveToUserDefaults<T: Codable>(key: String, value: T) {
+        if let encodedData = try? JSONEncoder().encode(value) {
+            UserDefaults.standard.set(encodedData, forKey: key)
+        }
     }
 }
