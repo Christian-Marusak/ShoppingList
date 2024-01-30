@@ -9,35 +9,35 @@ import SwiftUI
 struct ContentView: View {
     
     @State var myShopping : [ShoppingList] = [
-        ShoppingList(item: "Jablka", category: .fruits, number: 4, value: "kg", store: .Billa, isBought: false),
-        ShoppingList(item: "Hrozno", category: .fruits, number: 5, value: "kg", store: .Billa, isBought: false),
-        ShoppingList(item: "Banany", category: .fruits, number: 3, value: "kg", store: .Coop, isBought: false),
-        ShoppingList(item: "Hrušky", category: .fruits, number: 6, value: "kg", store: .Malina, isBought: false),
-        ShoppingList(item: "Kiwi", category: .fruits, number: 2, value: "kg", store: .Tesco, isBought: false),
-        ShoppingList(item: "Jahody", category: .fruits, number: 7, value: "kg", store: .Lidl, isBought: false),
-        ShoppingList(item: "Maliny", category: .fruits, number: 4, value: "kg", store: .Tesco, isBought: false),
-        ShoppingList(item: "Mlieko", category: .milk, number: 2, value: "l", store: .Tesco, isBought: false),
-        ShoppingList(item: "Rajčiny", category: .vegetables, number: 3, value: "kg", store: .Coop, isBought: false),
-        ShoppingList(item: "Cibuľa", category: .vegetables, number: 2, value: "kg", store: .Biedronka, isBought: false),
-        ShoppingList(item: "Baklažán", category: .vegetables, number: 1, value: "kg", store: .Lidl, isBought: false),
-        ShoppingList(item: "Kuracie prsia", category: .meat, number: 2, value: "kg", store: .Biedronka, isBought: false),
-        ShoppingList(item: "Hovädzie mäso", category: .meat, number: 3, value: "kg", store: .Tesco, isBought: false),
-        ShoppingList(item: "Klobása", category: .meatProducts, number: 2, value: "kg", store: .Lidl, isBought: false),
-        ShoppingList(item: "Plnotučný jogurt", category: .dairyProducts, number: 1, value: "l", store: .Coop, isBought: false),
-        ShoppingList(item: "Tvaroh", category: .dairyProducts, number: 5, value: "kg", store: .Malina, isBought: false),
-        ShoppingList(item: "Hrozienka", category: .cereals, number: 3, value: "kg", store: .Tesco, isBought: false),
-        ShoppingList(item: "Celozrnný chlieb", category: .bakery, number: 1, value: "ks", store: .Lidl, isBought: false),
-        ShoppingList(item: "Losos", category: .fish, number: 5, value: "kg", store: .Billa, isBought: false),
-        ShoppingList(item: "Mušle", category: .seafood, number: 1, value: "kg", store: .Tesco, isBought: false),
-        ShoppingList(item: "Vajcia", category: .eggs, number: 12, value: "ks", store: .Coop, isBought: false),
-        ShoppingList(item: "Vajcový šalát", category: .eggProducts, number: 2, value: "kg", store: .Biedronka, isBought: false),
-        ShoppingList(item: "Maslo", category: .fatsAndOils, number: 25, value: "kg", store: .Malina, isBought: false),
-        ShoppingList(item: "Olivový olej", category: .fatsAndOils, number: 5, value: "l", store: .Tesco, isBought: false),
-        ShoppingList(item: "Čokoláda", category: .sugarsAndSweets, number: 2, value: "ks", store: .Lidl, isBought: false),
-        ShoppingList(item: "Med", category: .sugarsAndSweets, number: 3, value: "kg", store: .Billa, isBought: false),
-        ShoppingList(item: "Zelený čaj", category: .beverages, number: 1, value: "ks.", store: .Coop, isBought: false),
-        ShoppingList(item: "Korenie", category: .herbsAndSpices, number: 1, value: "ks", store: .Biedronka, isBought: false),
-        ShoppingList(item: "Petržlen", category: .herbsAndSpices, number: 1, value: "kg", store: .Tesco, isBought: false)
+//        ShoppingList(item: "Jablka", category: .fruits, number: 4, value: "kg", store: .Billa, isBought: false),
+//        ShoppingList(item: "Hrozno", category: .fruits, number: 5, value: "kg", store: .Billa, isBought: false),
+//        ShoppingList(item: "Banany", category: .fruits, number: 3, value: "kg", store: .Coop, isBought: false),
+//        ShoppingList(item: "Hrušky", category: .fruits, number: 6, value: "kg", store: .Malina, isBought: false),
+//        ShoppingList(item: "Kiwi", category: .fruits, number: 2, value: "kg", store: .Tesco, isBought: false),
+//        ShoppingList(item: "Jahody", category: .fruits, number: 7, value: "kg", store: .Lidl, isBought: false),
+//        ShoppingList(item: "Maliny", category: .fruits, number: 4, value: "kg", store: .Tesco, isBought: false),
+//        ShoppingList(item: "Mlieko", category: .milk, number: 2, value: "l", store: .Tesco, isBought: false),
+//        ShoppingList(item: "Rajčiny", category: .vegetables, number: 3, value: "kg", store: .Coop, isBought: false),
+//        ShoppingList(item: "Cibuľa", category: .vegetables, number: 2, value: "kg", store: .Biedronka, isBought: false),
+//        ShoppingList(item: "Baklažán", category: .vegetables, number: 1, value: "kg", store: .Lidl, isBought: false),
+//        ShoppingList(item: "Kuracie prsia", category: .meat, number: 2, value: "kg", store: .Biedronka, isBought: false),
+//        ShoppingList(item: "Hovädzie mäso", category: .meat, number: 3, value: "kg", store: .Tesco, isBought: false),
+//        ShoppingList(item: "Klobása", category: .meatProducts, number: 2, value: "kg", store: .Lidl, isBought: false),
+//        ShoppingList(item: "Plnotučný jogurt", category: .dairyProducts, number: 1, value: "l", store: .Coop, isBought: false),
+//        ShoppingList(item: "Tvaroh", category: .dairyProducts, number: 5, value: "kg", store: .Malina, isBought: false),
+//        ShoppingList(item: "Hrozienka", category: .cereals, number: 3, value: "kg", store: .Tesco, isBought: false),
+//        ShoppingList(item: "Celozrnný chlieb", category: .bakery, number: 1, value: "ks", store: .Lidl, isBought: false),
+//        ShoppingList(item: "Losos", category: .fish, number: 5, value: "kg", store: .Billa, isBought: false),
+//        ShoppingList(item: "Mušle", category: .seafood, number: 1, value: "kg", store: .Tesco, isBought: false),
+//        ShoppingList(item: "Vajcia", category: .eggs, number: 12, value: "ks", store: .Coop, isBought: false),
+//        ShoppingList(item: "Vajcový šalát", category: .eggProducts, number: 2, value: "kg", store: .Biedronka, isBought: false),
+//        ShoppingList(item: "Maslo", category: .fatsAndOils, number: 25, value: "kg", store: .Malina, isBought: false),
+//        ShoppingList(item: "Olivový olej", category: .fatsAndOils, number: 5, value: "l", store: .Tesco, isBought: false),
+//        ShoppingList(item: "Čokoláda", category: .sugarsAndSweets, number: 2, value: "ks", store: .Lidl, isBought: false),
+//        ShoppingList(item: "Med", category: .sugarsAndSweets, number: 3, value: "kg", store: .Billa, isBought: false),
+//        ShoppingList(item: "Zelený čaj", category: .beverages, number: 1, value: "ks.", store: .Coop, isBought: false),
+//        ShoppingList(item: "Korenie", category: .herbsAndSpices, number: 1, value: "ks", store: .Biedronka, isBought: false),
+//        ShoppingList(item: "Petržlen", category: .herbsAndSpices, number: 1, value: "kg", store: .Tesco, isBought: false)
     ]
     
     @State var isPresented = false
@@ -110,7 +110,7 @@ struct ContentView: View {
         return groupedArray
     }
     
-    //MARK: Main content / List of items
+    //MARK: Main body / List
     
     var body: some View {
         Text("Shopping List").font(.largeTitle).bold()
@@ -169,12 +169,20 @@ struct ContentView: View {
                                     category: item.category.rawValue,
                                     number: item.number,
                                     store: item.store,
-                                    categories: item.category)
+                                    categories: item.category).swipeActions(edge: .leading, allowsFullSwipe: true) {
+                                        Button {
+                                            print("Item edited")
+                                        } label: {
+                                            Image(systemName: "chart.bar.doc.horizontal.fill")
+                                        }
+
+                                    }
                             }.onDelete(perform: { indexSet in
                                 myShopping.remove(atOffsets: indexSet)
                             })
                         }
-        }.onChange(of: myShopping, { oldValue, newValue in
+        }
+        .onChange(of: myShopping, { oldValue, newValue in
             print("Changed and saved")
             saveShoppingList()
         })

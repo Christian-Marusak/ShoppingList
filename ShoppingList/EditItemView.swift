@@ -8,18 +8,19 @@
 import SwiftUI
 
 struct EditItemView: View {
-    @Binding var itemName: String
-    @Binding var itemCategory: ShoppingList.Categories
-    @Binding var itemNumber: Int
-    @Binding var itemShop: ShoppingList.StoreName
+    @State var itemName: String
+    @State var itemCategory: ShoppingList.Categories
+    @State var itemNumber: Int
+    @State var itemShop: ShoppingList.StoreName
     
     
     
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text(itemName)
+        
     }
 }
 
 #Preview {
-    EditItemView(itemName: .constant("Name"), itemCategory: .constant(.beverages), itemNumber: .constant(3), itemShop: .constant(.Lidl))
+    EditItemView(itemName: "Syr", itemCategory: .bakery, itemNumber: 9, itemShop: .Biedronka)
 }
