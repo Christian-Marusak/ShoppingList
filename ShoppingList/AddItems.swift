@@ -88,7 +88,7 @@ struct AddItems: View {
                         selectedUnit = ShoppingList.readFromUserDefaults(key: C.lastUsedUnit, defaultValue: .pcs)
                     }
                 }.pickerStyle(.wheel)
-            }.frame(height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
+            }.frame(width: 250,height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
             //                }
             HStack {
                 Text("Choose shop").bold()

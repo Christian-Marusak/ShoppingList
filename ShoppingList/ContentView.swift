@@ -89,36 +89,7 @@ struct ContentView: View {
             print("Terminated and saved")
         }
     }
-
     
-//    func sortAndGroupList(by selectedCategory: ShoppingList.Categories? = nil) -> [[ShoppingList]] {
-//        var groupedItems = Dictionary<ShoppingList.Categories, [ShoppingList]>()
-//        
-//        // Sort the list
-//        let sortedList = myShopping.sorted { item1, item2 in
-//            let category1 = item1.category
-//            let category2 = item2.category
-//            
-//            if category1 == selectedCategory {
-//                return true
-//            } else if category2 == selectedCategory {
-//                return false
-//            } else {
-//                return category1.rawValue < category2.rawValue
-//            }
-//        }
-//        
-//        // Group the sorted list by category
-//        for item in sortedList {
-//            let category = item.category
-//            groupedItems[category, default: []].append(item)
-//        }
-//        
-//        // Convert the dictionary values to an array of arrays
-//        let groupedArray = groupedItems.values.map { $0 }
-//        
-//        return groupedArray
-//    }
     func sortAndGroupList(by selectedCategory: ShoppingList.Categories? = nil) -> [[ShoppingList]] {
         var groupedItems = Dictionary<ShoppingList.Categories, [ShoppingList]>()
         
@@ -166,7 +137,7 @@ struct ContentView: View {
                         if isOrdered {
             ForEach(sortAndGroupList(by: selectedCategory), id: \.self) { groupedSection in
                 Section(header: getCategoryHeader(from: groupedSection)) {
-                    ForEach(groupedSection, id: \.self) { item in
+                    ForEach(groupedSection, id: \.id) { item in
                         ShoppingProduct(
                             isBought: item.isBought,
                             value: item.value,
@@ -190,7 +161,7 @@ struct ContentView: View {
                 print("Deleting items with UUIDs: \(uuidsToDelete)")
             })
                         } else {
-                            ForEach(myShopping, id: \.self) { item in
+                            ForEach(myShopping, id: \.id) { item in
                                 ShoppingProduct(
                                     isBought: item.isBought,
                                     value: item.value,
