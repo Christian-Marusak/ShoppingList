@@ -5,26 +5,27 @@
 //  Created by Christian Marušák on 16/11/2023.
 //
 import SwiftUI
+import UIKit
 
 struct ContentView: View {
     
-    @State var myShopping : [ShoppingList] = []
-    
+    var myShopping : [ShoppingList] = []
+    @State var newList = [ShoppingList]()
     @State var isPresented = false
     @State var isPresentingCategorySelector : Bool = false
     @State var selectedCategory: ShoppingList.Categories
     @State var value = "ml"
     @State var isOrdered : Bool = false
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
-    
+
     //MARK: Functions
     
     func Delete(offsets: IndexSet){
-        myShopping.remove(atOffsets: offsets)
+        newList.remove(atOffsets: offsets)
     }
     
     func itemsInputCompletion (newItems: ShoppingList) {
-        myShopping.append(newItems)
+        newList.append(newItems)
     }
     
     // Function to get the category header for a section
@@ -50,7 +51,7 @@ struct ContentView: View {
     func loadShoppingList() {
         if let encodedData = UserDefaults.standard.data(forKey: C.userDefaultsKey) {
             do {
-                myShopping = try JSONDecoder().decode([ShoppingList].self, from: encodedData)
+                newList = try JSONDecoder().decode([ShoppingList].self, from: encodedData)
             } catch {
                 print("Error decoding shopping list: \(error.localizedDescription)")
             }
@@ -68,7 +69,7 @@ struct ContentView: View {
         var groupedItems = Dictionary<ShoppingList.Categories, [ShoppingList]>()
         
         // Sort the list alphabetically by category name
-        let sortedList = myShopping.sorted { item1, item2 in
+        let sortedList = newList.sorted { item1, item2 in
             return item1.category.rawValue < item2.category.rawValue
         }
         
@@ -111,7 +112,7 @@ struct ContentView: View {
             if isOrdered {
                 ForEach(sortAndGroupList(by: selectedCategory), id: \.self) { groupedSection in
                     Section(header: getCategoryHeader(from: groupedSection)) {
-                        ForEach(groupedSection, id: \.id) { item in
+                        ForEach(groupedSection) { item in
                             ShoppingProduct(
                                 isBought: item.isBought,
                                 value: item.value,
@@ -127,7 +128,7 @@ struct ContentView: View {
                     Delete(offsets: indexSet)
                 })
             } else {
-                ForEach(myShopping) { item in
+                ForEach(newList) { item in
                     ShoppingProduct(
                         isBought: item.isBought,
                         value: item.value,
@@ -152,6 +153,11 @@ struct ContentView: View {
         .onChange(of: myShopping, { oldValue, newValue in
             print("Changed and saved")
             saveShoppingList()
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
+                newList = myShopping
+                print(newList)
+            }
         })
         .onAppear {
             loadShoppingList()
@@ -164,7 +170,7 @@ struct ContentView: View {
         .padding(.top, -10)
         //
         .sheet(isPresented: $isPresented, content: {
-            AddItems(properAmountUnit: value, isPresented: $isPresented, itemsInputCompletion: itemsInputCompletion, freeList: $myShopping)
+            AddItems(properAmountUnit: value, isPresented: $isPresented, itemsInputCompletion: itemsInputCompletion, freeList: $newList)
                 .presentationDetents([.medium])
                 .presentationCornerRadius(20)
         })

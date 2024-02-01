@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ShoppingList : Identifiable, Equatable, Codable, Hashable {
+struct ShoppingList : Equatable, Codable, Identifiable, Hashable {
     var id = UUID()
     var item = String()
     var category: Categories
@@ -77,17 +77,17 @@ struct ShoppingList : Identifiable, Equatable, Codable, Hashable {
     
     static func gradientForStore(store: StoreName) -> LinearGradient {
         switch store {
-//        case .Tesco: return LinearGradient(colors: [Color.blue, Color.white, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
-//        case .Billa: return LinearGradient(colors: [Color.yellow, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
-//        case .Malina: return LinearGradient(colors: [Color.white, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
-//        case .Lidl: return LinearGradient(colors: [Color.yellow, Color.blue, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
-//        case .Coop: return LinearGradient(colors: [Color.white, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
-//        case .Biedronka: return LinearGradient(colors: [Color.yellow, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
-//        case .none: return LinearGradient(colors: [Color.blue, Color.blue], startPoint: .topLeading, endPoint: .bottomTrailing)
+            //        case .Tesco: return LinearGradient(colors: [Color.blue, Color.white, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
+            //        case .Billa: return LinearGradient(colors: [Color.yellow, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
+            //        case .Malina: return LinearGradient(colors: [Color.white, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
+            //        case .Lidl: return LinearGradient(colors: [Color.yellow, Color.blue, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
+            //        case .Coop: return LinearGradient(colors: [Color.white, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
+            //        case .Biedronka: return LinearGradient(colors: [Color.yellow, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
+            //        case .none: return LinearGradient(colors: [Color.blue, Color.blue], startPoint: .topLeading, endPoint: .bottomTrailing)
         default: return LinearGradient(colors: [Color.blue, Color.blue, Color.blue], startPoint: .topLeading, endPoint: .bottomTrailing)
         }
     }
-
+    
     static func stringForUnit(unit: Unit) -> String {
         return unit.rawValue
     }
@@ -95,17 +95,17 @@ struct ShoppingList : Identifiable, Equatable, Codable, Hashable {
     static func stringForStore(store: StoreName) -> String {
         return store.rawValue
     }
-//    static func readFromUserDefaults<T>(key: String, defaultValue: T) -> T where T: RawRepresentable, T.RawValue == String {
-//        if let savedValue = UserDefaults.standard.string(forKey: key) {
-//            return T(rawValue: savedValue) ?? defaultValue
-//        } else {
-//            return defaultValue
-//        }
-//    }
-//    
-//    static func saveToUserDefaults<T>(key: String, value: T) where T: RawRepresentable {
-//        UserDefaults.standard.set(value.rawValue, forKey: key)
-//    }
+    //    static func readFromUserDefaults<T>(key: String, defaultValue: T) -> T where T: RawRepresentable, T.RawValue == String {
+    //        if let savedValue = UserDefaults.standard.string(forKey: key) {
+    //            return T(rawValue: savedValue) ?? defaultValue
+    //        } else {
+    //            return defaultValue
+    //        }
+    //    }
+    //
+    //    static func saveToUserDefaults<T>(key: String, value: T) where T: RawRepresentable {
+    //        UserDefaults.standard.set(value.rawValue, forKey: key)
+    //    }
     static func readFromUserDefaults<T: Codable>(key: String, defaultValue: T) -> T {
         if let savedData = UserDefaults.standard.data(forKey: key),
            let savedValue = try? JSONDecoder().decode(T.self, from: savedData) {
