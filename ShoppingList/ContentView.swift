@@ -9,8 +9,8 @@ import UIKit
 
 struct ContentView: View {
     
-    var myShopping : [ShoppingList] = []
-    @State var newList = [ShoppingList]()
+    
+    @State var myShopping = [ShoppingList]()
     @State var isPresented = false
     @State var isPresentingCategorySelector : Bool = false
     @State var selectedCategory: ShoppingList.Categories
@@ -21,11 +21,11 @@ struct ContentView: View {
     //MARK: Functions
     
     func Delete(offsets: IndexSet){
-        newList.remove(atOffsets: offsets)
+        myShopping.remove(atOffsets: offsets)
     }
     
     func itemsInputCompletion (newItems: ShoppingList) {
-        newList.append(newItems)
+        myShopping.append(newItems)
     }
     
     // Function to get the category header for a section
@@ -51,7 +51,7 @@ struct ContentView: View {
     func loadShoppingList() {
         if let encodedData = UserDefaults.standard.data(forKey: C.userDefaultsKey) {
             do {
-                newList = try JSONDecoder().decode([ShoppingList].self, from: encodedData)
+                myShopping = try JSONDecoder().decode([ShoppingList].self, from: encodedData)
             } catch {
                 print("Error decoding shopping list: \(error.localizedDescription)")
             }
@@ -61,29 +61,28 @@ struct ContentView: View {
         func applicationWillTerminate(_ application: UIApplication) {
             // Save your data when the app is about to terminate
             ContentView( selectedCategory: .bakery).saveShoppingList()
-            print("Terminated and saved")
+//            print("Terminated and saved")
         }
     }
     
-    func sortAndGroupList(by selectedCategory: ShoppingList.Categories? = nil) -> [[ShoppingList]] {
-        var groupedItems = Dictionary<ShoppingList.Categories, [ShoppingList]>()
-        
-        // Sort the list alphabetically by category name
-        let sortedList = newList.sorted { item1, item2 in
-            return item1.category.rawValue < item2.category.rawValue
-        }
-        
-        // Group the sorted list by category
-        for item in sortedList {
-            let category = item.category
-            groupedItems[category, default: []].append(item)
-        }
-        
-        // Convert the dictionary values to an array of arrays
-        let groupedArray = groupedItems.values.map { $0 }
-        
-        return groupedArray
-    }
+//    func sortAndGroupList(by selectedCategory: ShoppingList.Categories? = nil) -> [[ShoppingList]] {
+//        var groupedItems = Dictionary<ShoppingList.Categories, [ShoppingList]>()
+//        
+//        // Sort the list alphabetically by category name
+//        let sortedList = myShopping.sorted { item1, item2 in
+//            return item1.category.rawValue < item2.category.rawValue
+//        }
+//        
+//        // Group the sorted list by category
+//        for item in sortedList {
+//            let category = item.category
+//            groupedItems[category, default: []].append(item)
+//        }
+//        
+//        // Convert the dictionary values to an array of arrays
+//        let groupedArray = groupedItems.values.map { $0 }
+//        return groupedArray
+//    }
     
     //MARK: Main body / List
     
@@ -102,33 +101,30 @@ struct ContentView: View {
                 .padding(.bottom)
         }).onChange(of: isOrdered) { oldValue, newValue in
             ShoppingList.saveToUserDefaults(key: C.isOrdered, value: newValue)
-            print("Changed from \(oldValue) to \(newValue)")
+//            print("Changed from \(oldValue) to \(newValue)")
         }
         .onAppear(perform: {
             isOrdered = ShoppingList.readFromUserDefaults(key: C.isOrdered, defaultValue: false)
-            print("Reading from userDefaults and old saved value is \(ShoppingList.readFromUserDefaults(key: C.isOrdered, defaultValue: true))")
+//            print("Reading from userDefaults and old saved value is \(ShoppingList.readFromUserDefaults(key: C.isOrdered, defaultValue: true))")
         })
         List {
             if isOrdered {
-                ForEach(sortAndGroupList(by: selectedCategory), id: \.self) { groupedSection in
-                    Section(header: getCategoryHeader(from: groupedSection)) {
-                        ForEach(groupedSection) { item in
-                            ShoppingProduct(
-                                isBought: item.isBought,
-                                value: item.value,
-                                product: item.item,
-                                category: item.category.rawValue,
-                                number: item.number,
-                                store: item.store,
-                                categories: item.category
-                            )
-                        }
+                ForEach(myShopping) {item in
+                    Section(ShoppingList.getCategoriesAsString(for: item.category)) {
+                        ShoppingProduct(isBought: item.isBought,
+                                        value: item.value,
+                                        product: item.item,
+                                        category: item.category.rawValue,
+                                        number: item.number,
+                                        store: item.store,
+                                        categories: item.category)
                     }
                 }.onDelete(perform: { indexSet in
                     Delete(offsets: indexSet)
                 })
+
             } else {
-                ForEach(newList) { item in
+                ForEach(myShopping) { item in
                     ShoppingProduct(
                         isBought: item.isBought,
                         value: item.value,
@@ -136,41 +132,28 @@ struct ContentView: View {
                         category: item.category.rawValue,
                         number: item.number,
                         store: item.store,
-                        categories: item.category).swipeActions(edge: .leading, allowsFullSwipe: true) {
-                            Button {
-                                print("Item edited")
-                            } label: {
-                                Image(systemName: "chart.bar.doc.horizontal.fill")
-                                    
-                            }.tint(.blue)
-                            
-                        }
+                        categories: item.category)
                 }.onDelete(perform: { indexSet in
                     Delete(offsets: indexSet)
                 })
             }
         }
         .onChange(of: myShopping, { oldValue, newValue in
-            print("Changed and saved")
+//            print("Changed and saved")
             saveShoppingList()
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-                newList = myShopping
-                print(newList)
-            }
         })
         .onAppear {
             loadShoppingList()
-            print("Showing and loading")
+//            print("Showing and loading")
         }
         .onDisappear {
-            print("Disaperaing and saveing")
+//            print("Disaperaing and saveing")
             saveShoppingList()
         }
         .padding(.top, -10)
         //
         .sheet(isPresented: $isPresented, content: {
-            AddItems(properAmountUnit: value, isPresented: $isPresented, itemsInputCompletion: itemsInputCompletion, freeList: $newList)
+            AddItems(properAmountUnit: value, isPresented: $isPresented, itemsInputCompletion: itemsInputCompletion, freeList: $myShopping)
                 .presentationDetents([.medium])
                 .presentationCornerRadius(20)
         })
