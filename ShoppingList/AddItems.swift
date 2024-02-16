@@ -14,11 +14,11 @@ struct AddItems: View {
     @State private var newSecondNumber : Int = 0
 
 
-    @Binding var isPresented: Bool
+    @Binding var isPresentedAdd: Bool
     @State var selectedCategory : ShoppingList.Categories = .beverages
     @State var selectedShop : ShoppingList.StoreName = .none
     @State var selectedUnit : ShoppingList.Unit = .kg
-    var itemsInputCompletion : (ShoppingList) -> Void
+//    var itemsInputCompletion : (ShoppingList) -> Void
 //    var freeList: Binding<[ShoppingList]>
     
     var completedNumber : Double {
@@ -112,7 +112,7 @@ struct AddItems: View {
     }
     func saveButtonPressed() {
         myList.addItems(newItem: newItem, newCategory: selectedCategory, newNumber: completedNumber, store: selectedShop, isBought: false, unit: selectedUnit)
-        isPresented.toggle()
+        isPresentedAdd.toggle()
         
     }
     
@@ -122,6 +122,6 @@ struct AddItems: View {
 
 
 #Preview {
-    AddItems(isPresented: .constant(false), selectedShop: .Coop, itemsInputCompletion: { _ in })
+    AddItems(isPresentedAdd: .constant(false), selectedShop: .Coop)
         .environmentObject(ShoppingViewModel())
 }
