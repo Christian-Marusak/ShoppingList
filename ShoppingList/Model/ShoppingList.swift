@@ -15,6 +15,7 @@ struct ShoppingList : Equatable, Codable, Identifiable, Hashable {
     var value = String()
     var store: StoreName
     var isBought = Bool()
+    var unit: Unit
     
     enum Unit: String, CaseIterable, Codable {
         case pcs,kg,mg,g,dkg,ml,l

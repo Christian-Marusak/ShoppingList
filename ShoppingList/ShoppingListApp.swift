@@ -10,10 +10,14 @@ import SwiftUI
 
 @main
 struct ShoppingListApp: App {
+    
+    @StateObject var shoppingViewModel : ShoppingViewModel = ShoppingViewModel()
+    
     var body: some Scene {
         WindowGroup {
             ContentView(selectedCategory: ShoppingList.Categories(rawValue: "") ?? .bakery)
 //            HoldForMoreView()
         }
+        .environmentObject(shoppingViewModel)
     }
 }
