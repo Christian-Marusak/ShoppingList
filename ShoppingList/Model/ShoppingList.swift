@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ShoppingList : Equatable, Codable, Identifiable, Hashable {
-    var id = UUID()
+    var id : String
     var item = String()
     var category: Categories
     var number = Double()
@@ -16,6 +16,21 @@ struct ShoppingList : Equatable, Codable, Identifiable, Hashable {
     var store: StoreName
     var isBought = Bool()
     var unit: Unit
+    
+    init(id: String = UUID().uuidString, item: String = String(), category: Categories, number: Double = Double(), value: String = String(), store: StoreName, isBought: Bool = Bool(), unit: Unit) {
+        self.id = id
+        self.item = item
+        self.category = category
+        self.number = number
+        self.value = value
+        self.store = store
+        self.isBought = isBought
+        self.unit = unit
+    }
+    
+    func updateCompletion() -> ShoppingList {
+        return ShoppingList(id: id, item: item, category: category, store: store, isBought: !isBought, unit: unit)
+    }
     
     enum Unit: String, CaseIterable, Codable {
         case pcs,kg,mg,g,dkg,ml,l

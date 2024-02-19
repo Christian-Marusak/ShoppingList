@@ -54,5 +54,14 @@ class ShoppingViewModel: ObservableObject {
         let newItem = ShoppingList(item: newItem, category: newCategory, number: newNumber, store: store , isBought: false, unit: unit)
         myShopping.append(newItem)
     }
+    
+    func updateList (item: ShoppingList) {
+       
+        if let index = myShopping.firstIndex(where: { $0.id == item.id }) {
+            myShopping[index] = item.updateCompletion()
+            myShopping[index] = myShopping.remove(at: index)
+        }
+        
+    }
 
 }

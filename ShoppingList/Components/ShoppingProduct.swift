@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ShoppingProduct: View {
+    
+    @EnvironmentObject var myList : ShoppingViewModel
+    
     @State var isBought : Bool
     var unit : String
     var product : String
@@ -49,4 +52,5 @@ struct ShoppingProduct: View {
 
 #Preview {
     ShoppingProduct(isBought: true, unit: "mg", product: "Plnotučný jogurt ", number: 3.0).previewLayout(.sizeThatFits)
+        .environmentObject(ShoppingViewModel())
 }

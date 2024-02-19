@@ -44,6 +44,11 @@ struct ContentView: View {
                         unit: item.unit.rawValue,
                         product: item.category.rawValue,
                         number: item.number)
+                    
+//                    if item.isBought {
+//                        myList.updateList(item: item)
+//                    }
+                    
                     .swipeActions(edge: .leading, allowsFullSwipe: true){
                         EditItemView(itemName: item.item, itemCategory: item.category, itemNumber: Int(item.number), itemShop: item.store, itemUnit: item.unit, isPresented: $isPresentedEdit)
                     }
@@ -52,7 +57,7 @@ struct ContentView: View {
                 .onMove(perform: myList.Move)
                 //                }
             }
-            .navigationTitle("Shoppie")
+                        .navigationTitle("Shoppie")
             .toolbar {
                 
                 ToolbarItem(placement: .topBarLeading) {
@@ -68,8 +73,8 @@ struct ContentView: View {
                 }
                 ToolbarItem(placement: .bottomBar) {
                     Button("Add item") {
-                                    isPresentedAdd.toggle()
-        //                myList.getItems()
+//                                    isPresentedAdd.toggle()
+                        myList.getItems()
                     }
                     .buttonStyle(.bordered)
                     .buttonBorderShape(.capsule)
