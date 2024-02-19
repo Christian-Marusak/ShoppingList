@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct EditItemView: View {
+    
+    @EnvironmentObject var myList : ShoppingViewModel
+    
     @State var itemName: String
     @State var itemCategory: ShoppingList.Categories
     @State var itemNumber: Int
@@ -18,7 +21,7 @@ struct EditItemView: View {
     
     
     var body: some View {
-        Spacer(minLength: 300)
+//        Spacer(minLength: 300)
         
         VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/,spacing: 20, content: {
             Text("What will be your new item?").padding(.top)
@@ -103,4 +106,5 @@ struct EditItemView: View {
 
 #Preview {
     EditItemView(itemName: "Syr", itemCategory: .bakery, itemNumber: 9, itemShop: .Biedronka, itemUnit: .kg, isPresented: .constant(false))
+        .environmentObject(ShoppingViewModel())
 }
