@@ -44,6 +44,7 @@
 		96F0C74C2B2A135F00B7C07D /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		96F627E92B584DC600ABE110 /* C.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C.swift; sourceTree = "<group>"; };
 		AA0E4D062B7D4F49004CDD5C /* ShoppingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingViewModel.swift; sourceTree = "<group>"; };
+		AA36A0832B867E51002147C1 /* TestGround.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TestGround.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +69,7 @@
 		9627E8382B065FF60000EE27 = {
 			isa = PBXGroup;
 			children = (
+				AA36A0832B867E51002147C1 /* TestGround.playground */,
 				9627E8432B065FF60000EE27 /* ShoppingList */,
 				9627E8422B065FF60000EE27 /* Products */,
 			);
@@ -183,7 +185,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1520;
 				TargetAttributes = {
 					9627E8402B065FF60000EE27 = {
 						CreatedOnToolsVersion = 15.0.1;
@@ -281,6 +283,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -344,6 +347,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -373,6 +377,7 @@
 				CODE_SIGN_ENTITLEMENTS = ShoppingList/ShoppingList.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ShoppingList/Preview Content\"";
 				DEVELOPMENT_TEAM = 2MK43D3KDT;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -411,6 +416,7 @@
 				CODE_SIGN_ENTITLEMENTS = ShoppingList/ShoppingList.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"ShoppingList/Preview Content\"";
 				DEVELOPMENT_TEAM = 2MK43D3KDT;
 				ENABLE_HARDENED_RUNTIME = YES;

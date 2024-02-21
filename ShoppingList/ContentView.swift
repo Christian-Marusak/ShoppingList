@@ -21,43 +21,53 @@ struct ContentView: View {
     @State var isOrdered : Bool = false
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
+    func sortItemsBasedOnSection(item : ShoppingList, section: String) -> ShoppingList {
+        
+            
+        return ShoppingList
+    }
+    
+    
     //MARK: Main body / List
     
     var body: some View {
         
-//        Text("Shopping List").font(.largeTitle).bold()
-//            .padding(.top, 5)
-
-//                .onChange(of: isOrdered) { oldValue, newValue in
-//            ShoppingList.saveToUserDefaults(key: C.isOrdered, value: newValue)
-//            //            print("Changed from \(oldValue) to \(newValue)")
-//        }
-//        .onAppear(perform: {
-//            isOrdered = ShoppingList.readFromUserDefaults(key: C.isOrdered, defaultValue: false)
-//        })
+        
         
         NavigationView (content: {
             List {
-                ForEach(myList.myShopping) { item in
-                    ShoppingProduct(
-                        isBought: item.isBought,
-                        unit: item.unit.rawValue,
-                        product: item.category.rawValue,
-                        number: item.number)
-                    
-//                    if item.isBought {
-//                        myList.updateList(item: item)
-//                    }
-                    
-                    .swipeActions(edge: .leading, allowsFullSwipe: true){
-                        EditItemView(itemName: item.item, itemCategory: item.category, itemNumber: Int(item.number), itemShop: item.store, itemUnit: item.unit, isPresented: $isPresentedEdit)
+                if isOrdered {
+                    ForEach(myList.myShopping) { item in
+                        ShoppingProduct(
+                            isBought: item.isBought,
+                            unit: item.unit.rawValue,
+                            product: item.category.rawValue,
+                            number: item.number)
+                        
+                        .swipeActions(edge: .leading, allowsFullSwipe: true){
+                            EditItemView(itemName: item.item, itemCategory: item.category, itemNumber: Int(item.number), itemShop: item.store, itemUnit: item.unit, isPresented: $isPresentedEdit)
+                        }
                     }
+                    .onDelete(perform: myList.Delete)
+                    .onMove(perform: myList.Move)
+                } else {
+                    ForEach(myList.generateSectionNamesFromGroups(myList.groupItemsByCategory(myList.myShopping)), id: \.self) { sectionName in
+                        Section(sectionName){
+//                            ForEach(myList.myShopping.map{$0.category == sectionName}){item in
+//                                Text(item.item)
+//                            Text(myList.myShopping.map{$0.category.rawValue == sectionName)
+                                
+//                            }
+                            Text(sectionName)
+                            
+                        }
+                    }
+                
                 }
-                .onDelete(perform: myList.Delete)
-                .onMove(perform: myList.Move)
-                //                }
-            }
-                        .navigationTitle("Shoppie")
+            }.onAppear(perform: {
+                print(myList.myShopping.map{$0.category.rawValue == "bakery"})
+            })
+            .navigationTitle("Shoppie")
             .toolbar {
                 
                 ToolbarItem(placement: .topBarLeading) {
@@ -69,12 +79,12 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: isOrdered ? "chart.bar.doc.horizontal.fill" : "chart.bar.doc.horizontal")
                     }
-
+                    
                 }
                 ToolbarItem(placement: .bottomBar) {
                     Button("Add item") {
-//                                    isPresentedAdd.toggle()
-                        myList.getItems()
+                        isPresentedAdd.toggle()
+                        //                        myList.getItems()
                     }
                     .buttonStyle(.bordered)
                     .buttonBorderShape(.capsule)
@@ -95,32 +105,32 @@ struct ContentView: View {
                     .padding(.trailing, 50)
                 }
             }
-            
-            
-            
+                        
+                        
+                        
             .onChange(of: myList.myShopping, { oldValue, newValue in
                 //            print("Changed and saved")
                 myList.saveShoppingList()
             })
-            .onAppear {
-                myList.loadShoppingList()
-                //            print("Showing and loading")
-            }
+                .onAppear {
+                    myList.loadShoppingList()
+                    //            print("Showing and loading")
+                }
             .onDisappear {
                 //            print("Disaperaing and saveing")
                 myList.saveShoppingList()
             }
             .padding(.top, -10)
-            Button("Test") {
-            }
-            
-        })
+                        Button("Test") {
+        }
+                        
+                        })
         .sheet(isPresented: $isPresentedEdit, content: {
             ForEach(myList.myShopping){ item in
                 EditItemView(itemName: item.item, itemCategory: item.category, itemNumber: Int(item.number), itemShop: item.store, itemUnit: item.unit, isPresented: $isPresentedEdit)
             }
-                .presentationDetents([.medium])
-                .presentationCornerRadius(20)
+            .presentationDetents([.medium])
+            .presentationCornerRadius(20)
             
         })
         .sheet(isPresented: $isPresentedAdd, content: {

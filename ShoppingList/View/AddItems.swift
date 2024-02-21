@@ -12,6 +12,7 @@ struct AddItems: View {
     @State private var newItem : String = ""
     @State private var newNumber : Int = 0
     @State private var newSecondNumber : Int = 0
+    @FocusState private var isFocused : Bool
 
 
     @Binding var isPresentedAdd: Bool
@@ -34,8 +35,9 @@ struct AddItems: View {
             TextField("Item name", text: $newItem)
                 .textFieldStyle(.roundedBorder)
                 .padding(.horizontal)
+                .focused($isFocused)
                 .onAppear(perform: {
-                    
+                    isFocused.toggle()
                 })
             HStack {
                 Text("Choose category").bold()
