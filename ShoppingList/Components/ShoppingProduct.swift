@@ -37,7 +37,6 @@ struct ShoppingProduct: View {
             Text(product)
                 .bold()
                 .font(.system(size: 15))
-            //                        .frame(width: 150,height: 30,alignment: .center)
             Spacer()
             Text(String(formattedNumber))
                 .frame(alignment: .center)
@@ -45,7 +44,7 @@ struct ShoppingProduct: View {
             Text(String(unit))
                 .frame(alignment: .center)
                 .font(.system(size: 15))
-            //                            .padding(.trailing, 30)
+            
         })
     }
 }

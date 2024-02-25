@@ -63,24 +63,13 @@ class ShoppingViewModel: ObservableObject {
         
     }
     
-    func groupItemsByCategory(_ items: [ShoppingList]) -> [ShoppingList.Categories: [ShoppingList]] {
-        var groupedItems: [ShoppingList.Categories: [ShoppingList]] = [:]
-
-        for item in items {
-            if var categoryItems = groupedItems[item.category] {
-                categoryItems.append(item)
-                groupedItems[item.category] = categoryItems
-            } else {
-                groupedItems[item.category] = [item]
-            }
+    func disableItem(item: ShoppingList) {
+        if let index = myShopping.firstIndex(where: {$0.id == item.id}) {
+            myShopping[index] =
         }
-
-        return groupedItems
     }
+    
 
-    func generateSectionNamesFromGroups(_ groupedItems: [ShoppingList.Categories: [ShoppingList]]) -> [String] {
-        return groupedItems.keys.map { $0.rawValue.capitalized }
-    }
 
 
 }

@@ -21,12 +21,38 @@ struct ContentView: View {
     @State var isOrdered : Bool = false
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
-    func sortItemsBasedOnSection(item : ShoppingList, section: String) -> ShoppingList {
-        
-            
-        return ShoppingList
+    func filterForSection (list: [ShoppingList], searched: String) -> [ShoppingList] {
+        let filteredItems = list.filter({$0.category.rawValue == searched})
+       let final = filteredItems.map { item in
+           print(item)
+           return item
+       }
+
+       return final
+   }
+
+    func filterBySection(list: [ShoppingList], section: String) -> [ShoppingList] {
+        return list.filter { $0.category.rawValue == section }
     }
-    
+     
+    func groupItemsByCategory(_ items: [ShoppingList]) -> [ShoppingList.Categories: [ShoppingList]] {
+        var groupedItems: [ShoppingList.Categories: [ShoppingList]] = [:]
+
+        for item in items {
+            if var categoryItems = groupedItems[item.category] {
+                categoryItems.append(item)
+                groupedItems[item.category] = categoryItems
+            } else {
+                groupedItems[item.category] = [item]
+            }
+        }
+
+        return groupedItems
+    }
+
+    func generateSectionNamesFromGroups(_ groupedItems: [ShoppingList.Categories: [ShoppingList]]) -> [String] {
+        return groupedItems.keys.map { $0.rawValue.capitalized }
+    }
     
     //MARK: Main body / List
     
@@ -36,37 +62,20 @@ struct ContentView: View {
         
         NavigationView (content: {
             List {
-                if isOrdered {
-                    ForEach(myList.myShopping) { item in
-                        ShoppingProduct(
-                            isBought: item.isBought,
-                            unit: item.unit.rawValue,
-                            product: item.category.rawValue,
-                            number: item.number)
-                        
-                        .swipeActions(edge: .leading, allowsFullSwipe: true){
-                            EditItemView(itemName: item.item, itemCategory: item.category, itemNumber: Int(item.number), itemShop: item.store, itemUnit: item.unit, isPresented: $isPresentedEdit)
-                        }
+                ForEach(myList.myShopping) { item in
+                    ShoppingProduct(
+                        isBought: item.isBought,
+                        unit: item.unit.rawValue,
+                        product: item.category.rawValue,
+                        number: item.number)
+                    
+                    .swipeActions(edge: .leading, allowsFullSwipe: true){
+                        EditItemView(itemName: item.item, itemCategory: item.category, itemNumber: Int(item.number), itemShop: item.store, itemUnit: item.unit, isPresented: $isPresentedEdit)
                     }
-                    .onDelete(perform: myList.Delete)
-                    .onMove(perform: myList.Move)
-                } else {
-                    ForEach(myList.generateSectionNamesFromGroups(myList.groupItemsByCategory(myList.myShopping)), id: \.self) { sectionName in
-                        Section(sectionName){
-//                            ForEach(myList.myShopping.map{$0.category == sectionName}){item in
-//                                Text(item.item)
-//                            Text(myList.myShopping.map{$0.category.rawValue == sectionName)
-                                
-//                            }
-                            Text(sectionName)
-                            
-                        }
-                    }
-                
                 }
-            }.onAppear(perform: {
-                print(myList.myShopping.map{$0.category.rawValue == "bakery"})
-            })
+                .onDelete(perform: myList.Delete)
+                .onMove(perform: myList.Move)
+            }
             .navigationTitle("Shoppie")
             .toolbar {
                 
