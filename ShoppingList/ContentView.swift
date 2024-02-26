@@ -21,15 +21,15 @@ struct ContentView: View {
     @State var isOrdered : Bool = false
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
-    func filterForSection (list: [ShoppingList], searched: String) -> [ShoppingList] {
-        let filteredItems = list.filter({$0.category.rawValue == searched})
-       let final = filteredItems.map { item in
-           print(item)
-           return item
-       }
-
-       return final
-   }
+//    func filterForSection (list: [ShoppingList], searched: String) -> [ShoppingList] {
+//        let filteredItems = list.filter({$0.category.rawValue == searched})
+//       let final = filteredItems.map { item in
+//           print(item)
+//           return item
+//       }
+//
+//       return final
+//   }
 
     func filterBySection(list: [ShoppingList], section: String) -> [ShoppingList] {
         return list.filter { $0.category.rawValue == section }
@@ -57,9 +57,6 @@ struct ContentView: View {
     //MARK: Main body / List
     
     var body: some View {
-        
-        
-        
         NavigationView (content: {
             List {
                 ForEach(myList.myShopping) { item in
@@ -68,10 +65,15 @@ struct ContentView: View {
                         unit: item.unit.rawValue,
                         product: item.category.rawValue,
                         number: item.number)
-                    
+                    .onTapGesture {
+                        withAnimation {
+                            myList.updateList(item: item)
+                        }
+                    }
                     .swipeActions(edge: .leading, allowsFullSwipe: true){
                         EditItemView(itemName: item.item, itemCategory: item.category, itemNumber: Int(item.number), itemShop: item.store, itemUnit: item.unit, isPresented: $isPresentedEdit)
                     }
+                    
                 }
                 .onDelete(perform: myList.Delete)
                 .onMove(perform: myList.Move)
@@ -132,7 +134,7 @@ struct ContentView: View {
             .padding(.top, -10)
                         Button("Test") {
         }
-                        
+            
                         })
         .sheet(isPresented: $isPresentedEdit, content: {
             ForEach(myList.myShopping){ item in

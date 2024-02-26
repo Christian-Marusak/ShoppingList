@@ -29,9 +29,6 @@ struct ShoppingProduct: View {
             Toggle(isOn: $isBought, label: {
                 Image(systemName: isBought ? "checkmark.circle.fill" : "checkmark.circle" )
             }).toggleStyle(.button)
-                .onChange(of: isBought) { oldValue, newValue in
-                    print("current status is \(newValue), old status is \(oldValue)")
-                }
                 .padding(.leading, -10)
             Spacer()
             Text(product)

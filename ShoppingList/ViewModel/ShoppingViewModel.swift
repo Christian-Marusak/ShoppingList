@@ -9,6 +9,7 @@ import Foundation
 class ShoppingViewModel: ObservableObject {
     
     @Published var myShopping: [ShoppingList] = []
+    @Published var boughtItems : [ShoppingList] = []
     
     init() {
         getItems()
@@ -64,9 +65,12 @@ class ShoppingViewModel: ObservableObject {
     }
     
     func disableItem(item: ShoppingList) {
-        if let index = myShopping.firstIndex(where: {$0.id == item.id}) {
-            myShopping[index] =
+        if let index = myShopping.firstIndex(where: { $0.id == item.id }) {
+            myShopping[index] = item.updateCompletion()
         }
+        boughtItems.append(item)
+        
+        
     }
     
 
