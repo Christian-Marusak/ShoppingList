@@ -137,9 +137,9 @@ struct ContentView: View {
             
                         })
         .sheet(isPresented: $isPresentedEdit, content: {
-            ForEach(myList.myShopping){ item in
-                EditItemView(itemName: item.item, itemCategory: item.category, itemNumber: Int(item.number), itemShop: item.store, itemUnit: item.unit, isPresented: $isPresentedEdit)
-            }
+            
+                
+            
             .presentationDetents([.medium])
             .presentationCornerRadius(20)
             

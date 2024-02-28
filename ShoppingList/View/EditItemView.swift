@@ -93,7 +93,7 @@ struct EditItemView: View {
                                 .padding(.trailing)
                         }}
             })
-            Spacer(minLength: 300)
+//            Spacer(minLength: 300)
         })
     }
     
