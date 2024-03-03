@@ -11,29 +11,36 @@ struct EditItemView: View {
     
     @EnvironmentObject var myList : ShoppingViewModel
     
-    @State var itemName: String
-    @State var itemCategory: ShoppingList.Categories
-    @State var itemNumber: Int
+    @Environment(\.dismiss) var dismiss
+    @FocusState private var isFocused : Bool
+    @Binding var itemName: String
+    @Binding var itemCategory: ShoppingList.Categories
+    @Binding var itemNumber: Int
+    var secondItemNumber: Int {
+        let strNumber = String(itemNumber)
+        let decimalIndex = strNumber.firstIndex(of: ".")!
+        let decimalPartStr = strNumber[decimalIndex...]
+        let decimalPart = Int(decimalPartStr)!
+        return decimalPart
+    }
     @State var itemShop: ShoppingList.StoreName
     @State var itemUnit: ShoppingList.Unit
     @Binding var isPresented: Bool
     
-    
-    
     var body: some View {
-//        Spacer(minLength: 300)
         
         VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/,spacing: 20, content: {
-            Text("What will be your new item?").padding(.top)
+            Text("How to do you want to change item?").padding(.top)
                 .font(.headline)
             TextField("Item name", text: $itemName)
                 .textFieldStyle(.roundedBorder)
                 .padding(.horizontal)
+                .focused($isFocused)
                 .onAppear(perform: {
-                    
+                    isFocused.toggle()
                 })
             HStack {
-                Text("Choose category").bold()
+                Text("Change category").bold()
                 Picker("Category", selection: $itemCategory) {
                     ForEach(ShoppingList.Categories.allCases, id: \.self) { category in
                         Text(ShoppingList.getCategoriesAsString(for: category))
@@ -47,15 +54,26 @@ struct EditItemView: View {
             }
             
             HStack{
-                TextField("Edit number of items", value: $itemNumber, format: .number)
-                    .textFieldStyle(.roundedBorder)
-                    .keyboardType(.decimalPad)
-                    .frame(width: 100)
+                Picker("", selection: $itemNumber) {
+                    ForEach(0...100, id: \.self){item in
+                        Text("\(item)")
+                    }
+                }
+                .pickerStyle(.wheel)
+                .frame(width: 80)
+//                Text(",")
+//                Picker("", selection: secondItemNumber) {
+//                    ForEach(0...100, id: \.self){item in
+//                        Text("\(item)")
+//                    }
+//                }
+                .pickerStyle(.wheel)
+                .frame(width: 80)
+                
                 Picker("", selection: $itemUnit) {
                     ForEach(ShoppingList.Unit.allCases, id: \.self) { unit in
                         Text(unit.rawValue)
                     }.onChange(of: itemUnit, { oldValue, newValue in
-                        print(itemUnit)
                         ShoppingList.saveToUserDefaults(key: C.lastUsedUnit, value: newValue)
                     })
                     .onAppear {
@@ -93,18 +111,17 @@ struct EditItemView: View {
                                 .padding(.trailing)
                         }}
             })
-//            Spacer(minLength: 300)
         })
     }
     
     
     func saveButtonPressed() {
-        
-        isPresented.toggle()
+        myList.updateList(item: ShoppingList(item: itemName, category: itemCategory, store: itemShop, unit: itemUnit))
+        dismiss()
     }
 }
 
 #Preview {
-    EditItemView(itemName: "Syr", itemCategory: .bakery, itemNumber: 9, itemShop: .Biedronka, itemUnit: .kg, isPresented: .constant(false))
+    EditItemView(itemName: .constant("Syr"), itemCategory: .constant(.bakery), itemNumber: .constant(9), itemShop: .Biedronka, itemUnit: .kg, isPresented: .constant(false))
         .environmentObject(ShoppingViewModel())
 }

@@ -14,6 +14,15 @@ struct ContentView: View {
     @EnvironmentObject var myList : ShoppingViewModel
     @Environment(\.editMode) private var editMode
     
+    
+    @State var itemName : String = "Name"
+    @State var itemNumber : Int = 88
+    @State var itemCategory : ShoppingList.Categories = .bakery
+    @State var itemUnit : ShoppingList.Unit = .pcs
+    
+    
+    
+    @State var selectedItemFromList: ShoppingList?
     @State var isPresentedAdd = false
     @State var isPresentedEdit = false
     @State var isPresentingCategorySelector : Bool = false
@@ -21,23 +30,13 @@ struct ContentView: View {
     @State var isOrdered : Bool = false
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
-//    func filterForSection (list: [ShoppingList], searched: String) -> [ShoppingList] {
-//        let filteredItems = list.filter({$0.category.rawValue == searched})
-//       let final = filteredItems.map { item in
-//           print(item)
-//           return item
-//       }
-//
-//       return final
-//   }
-
     func filterBySection(list: [ShoppingList], section: String) -> [ShoppingList] {
         return list.filter { $0.category.rawValue == section }
     }
-     
+    
     func groupItemsByCategory(_ items: [ShoppingList]) -> [ShoppingList.Categories: [ShoppingList]] {
         var groupedItems: [ShoppingList.Categories: [ShoppingList]] = [:]
-
+        
         for item in items {
             if var categoryItems = groupedItems[item.category] {
                 categoryItems.append(item)
@@ -46,10 +45,10 @@ struct ContentView: View {
                 groupedItems[item.category] = [item]
             }
         }
-
+        
         return groupedItems
     }
-
+    
     func generateSectionNamesFromGroups(_ groupedItems: [ShoppingList.Categories: [ShoppingList]]) -> [String] {
         return groupedItems.keys.map { $0.rawValue.capitalized }
     }
@@ -63,15 +62,13 @@ struct ContentView: View {
                     ShoppingProduct(
                         isBought: item.isBought,
                         unit: item.unit.rawValue,
-                        product: item.category.rawValue,
+                        product: item.item,
                         number: item.number)
                     .onTapGesture {
                         withAnimation {
                             myList.updateList(item: item)
+                            self.selectedItemFromList = item
                         }
-                    }
-                    .swipeActions(edge: .leading, allowsFullSwipe: true){
-                        EditItemView(itemName: item.item, itemCategory: item.category, itemNumber: Int(item.number), itemShop: item.store, itemUnit: item.unit, isPresented: $isPresentedEdit)
                     }
                     
                 }
@@ -116,34 +113,33 @@ struct ContentView: View {
                     .padding(.trailing, 50)
                 }
             }
-                        
-                        
-                        
+            
+            
+            
             .onChange(of: myList.myShopping, { oldValue, newValue in
                 //            print("Changed and saved")
                 myList.saveShoppingList()
             })
-                .onAppear {
-                    myList.loadShoppingList()
-                    //            print("Showing and loading")
-                }
+            .onAppear {
+                myList.loadShoppingList()
+                //            print("Showing and loading")
+            }
             .onDisappear {
                 //            print("Disaperaing and saveing")
                 myList.saveShoppingList()
             }
             .padding(.top, -10)
-                        Button("Test") {
-        }
-            
-                        })
-        .sheet(isPresented: $isPresentedEdit, content: {
-            
-                
-            
-            .presentationDetents([.medium])
-            .presentationCornerRadius(20)
+            Button("Test") {
+            }
             
         })
+        .sheet(item: $selectedItemFromList, content: { item in
+            EditItemView(myList: _myList, itemName: $itemName, itemCategory: $itemCategory, itemNumber: $itemNumber, itemShop: item.store, itemUnit: itemUnit, isPresented: $isPresentedEdit)
+                .presentationDetents([.medium])
+                .presentationCornerRadius(20)
+        })
+        
+        
         .sheet(isPresented: $isPresentedAdd, content: {
             AddItems(isPresentedAdd: $isPresentedAdd)
                 .presentationDetents([.medium])

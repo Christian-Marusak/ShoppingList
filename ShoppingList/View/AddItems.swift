@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct AddItems: View {
+    
     @EnvironmentObject var myList : ShoppingViewModel
     @State private var newItem : String = ""
     @State private var newNumber : Int = 0
@@ -19,8 +20,6 @@ struct AddItems: View {
     @State var selectedCategory : ShoppingList.Categories = .beverages
     @State var selectedShop : ShoppingList.StoreName = .none
     @State var selectedUnit : ShoppingList.Unit = .kg
-//    var itemsInputCompletion : (ShoppingList) -> Void
-//    var freeList: Binding<[ShoppingList]>
     
     var completedNumber : Double {
         print(newNumber , newSecondNumber)
