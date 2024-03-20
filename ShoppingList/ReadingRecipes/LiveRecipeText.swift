@@ -7,19 +7,20 @@
 
 import SwiftUI
 import Vision
+import PhotosUI
 struct LiveRecipeText: View {
     
     @State var recognizedText = ""
     @State private var showCamera = false
     @State private var selectedImage: UIImage?
     @State var image: UIImage?
+    @State private var photosPicker: PhotosPickerItem?
     
     
     
-    func ocr() {
-        let image = UIImage(named: "quote")
+    func ocr(image : UIImage) {
         
-        if let cgImage = image?.cgImage {
+        if let cgImage = image.cgImage {
             
             // Request handler
             let handler = VNImageRequestHandler(cgImage: cgImage)
@@ -38,7 +39,9 @@ struct LiveRecipeText: View {
                 
                 // Update the UI
                 DispatchQueue.main.async {
+                    print("Started scanning")
                     recognizedText = stringArray.joined(separator: "\n")
+                    print(recognizedText)
                 }
             }
             
@@ -56,17 +59,13 @@ struct LiveRecipeText: View {
     var body: some View {
         Button("Start scanning") {
             self.showCamera.toggle()
-            print("Started scanning")
-        }
-        .fullScreenCover(isPresented: self.$showCamera) {
-            accessCameraView(selectedImage: self.$selectedImage)
+        }.padding()
+            .foregroundColor(.white)
+            .background(Capsule().fill(Color.blue))
         
-        .padding()
-        .foregroundColor(.white)
-        .background(Capsule().fill(Color.blue))
+        PhotosPicker("Photos", selection: $photosPicker)
     }
 }
-
 
 
 
