@@ -23,6 +23,7 @@
 		96F0C74D2B2A135F00B7C07D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0C74C2B2A135F00B7C07D /* SettingsView.swift */; };
 		96F627EA2B584DC600ABE110 /* C.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F627E92B584DC600ABE110 /* C.swift */; };
 		AA0E4D072B7D4F49004CDD5C /* ShoppingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E4D062B7D4F49004CDD5C /* ShoppingViewModel.swift */; };
+		AAA7C7242BB355C400F85CAC /* PhotoPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA7C7232BB352DE00F85CAC /* PhotoPickerController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		96F627E92B584DC600ABE110 /* C.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = C.swift; sourceTree = "<group>"; };
 		AA0E4D062B7D4F49004CDD5C /* ShoppingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingViewModel.swift; sourceTree = "<group>"; };
 		AA36A0832B867E51002147C1 /* TestGround.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TestGround.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		AAA7C7232BB352DE00F85CAC /* PhotoPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerController.swift; sourceTree = "<group>"; };
 		AAF13DA62BAB020300288D5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -153,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				AA0E4D062B7D4F49004CDD5C /* ShoppingViewModel.swift */,
+				AAA7C7232BB352DE00F85CAC /* PhotoPickerController.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 				968A7FE22B0E51F100726061 /* ShoppingProduct.swift in Sources */,
 				96732BE52B56E0CB005AE51B /* EditItemView.swift in Sources */,
 				965442062B0D190B00780701 /* AddItems.swift in Sources */,
+				AAA7C7242BB355C400F85CAC /* PhotoPickerController.swift in Sources */,
 				96A3CF882B4EC4FE006724BB /* HoldForMoreView.swift in Sources */,
 				96994F9B2B28B41B00C376AC /* InputView.swift in Sources */,
 				96F0C74B2B2A129D00B7C07D /* SettingsRowView.swift in Sources */,
