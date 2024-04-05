@@ -30,6 +30,17 @@ struct ContentView: View {
     @State var isOrdered : Bool = false
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
+    func createJSON() {
+        let encoder = JSONEncoder()
+        do {
+            let encodedData = try encoder.encode(myList.myShopping)
+            print(String(data: encodedData, encoding: .utf8)!)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+    }
+    
     func filterBySection(list: [ShoppingList], section: String) -> [ShoppingList] {
         return list.filter { $0.category.rawValue == section }
     }
@@ -101,7 +112,8 @@ struct ContentView: View {
                 }
                 ToolbarItem(placement: .bottomBar) {
                     Button {
-                        myList.DeleteItems()
+                        createJSON()
+//                        myList.DeleteItems()
                     } label: {
                         Image(systemName: "trash.fill")
                             .resizable()

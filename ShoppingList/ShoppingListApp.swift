@@ -15,8 +15,7 @@ struct ShoppingListApp: App {
     
     var body: some Scene {
         WindowGroup {
-//            ContentView(selectedCategory: ShoppingList.Categories(rawValue: "") ?? .bakery)
-            LiveRecipeText()
+            ContentView(selectedCategory: ShoppingList.Categories(rawValue: "") ?? .bakery)
         }
         .environmentObject(shoppingViewModel)
     }
