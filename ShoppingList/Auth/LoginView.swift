@@ -5,31 +5,62 @@
 //  Created by Christián on 05/04/2024.
 //
 
+// MARK: - Logic behing Login View
+
 import SwiftUI
 
 class LoginViewModel: ObservableObject {
     let authManager = AuthManager()
     @Published var loginMail: String = ""
     @Published var loginPassword = ""
+    @Published var name = ""
+    @State var showAlert: Bool = false
+    
     
     
     func callCreateUser() async {
+        if loginMail.contains("@") && loginPassword.count >= 8 {
+            do {
+                try await authManager.createUser(email: loginMail, password: loginPassword)
+                loginMail = ""
+                loginPassword = ""
+            } catch {
+                print(error.localizedDescription)
+            }
+        } else {
+            print("Password is bad or mail is bad")
+            showAlert = true
+        }
+        
+    }
+    func callLoginUser() async {
         do {
-            try await authManager.createUser(email: loginMail, password: loginPassword)
-            loginMail = ""
-            loginPassword = ""
+            try await authManager.loginUser(email: loginMail, password: loginPassword)
         } catch {
             print(error.localizedDescription)
         }
     }
+    
 }
 
+// MARK: - User Interface of LoginView
+
 struct LoginView: View {
+    @State var register: Bool = true
     @StateObject var viewModel = LoginViewModel()
     
     
     var body: some View {
+        Spacer()
         VStack {
+            InputView(
+                text: $viewModel.name,
+                title: "Name",
+                placeholder: "Enter you name"
+            )
+            .opacity(register ? 1 : 0)
+            .animation(.easeIn, value: register)
+            
             InputView(
                 text: $viewModel.loginMail,
                 title: "Email",
@@ -37,21 +68,45 @@ struct LoginView: View {
             )
             InputView(
                 text: $viewModel.loginPassword,
-                title: "Heslo",
+                title: "Password",
                 placeholder: "Enter password",
                 isSecureField: true
             )
-            HStack {
-                Button("Login") {
-                    print("Login")
-                }
-                Button("Register") {
-                    Task {
-                        await viewModel.callCreateUser()
+            
+            VStack {
+                Button {
+                    if register {
+                        Task {
+                            await viewModel.callCreateUser()
+                        }
+                    } else {
+                        Task {
+                            await viewModel.callLoginUser()
+                        }
+                        print("Login")
                     }
-                    print("Register")
+                } label: {
+                    Text(register ? "register" : "login")
+                        .animation(.easeIn, value: register)
+                        .foregroundStyle(.shoppieSecondary)
+                        .frame(width: 100, height: 40)
+                        .background(.shoppiePrimary)
+                        .cornerRadius(15)
+                    
+                }
+                Button {
+                    register.toggle()
+                }label: {
+                    HStack {
+                        Text(register ? "i have account i want to" : "I dont have account i want to")
+                            .font(.footnote)
+                        Text(register ? "login" : "register")
+                            .font(.footnote)
+                            .bold()
+                    }
                 }
             }
+            .padding(50)
         }
         .padding()
         

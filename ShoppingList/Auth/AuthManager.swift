@@ -15,4 +15,8 @@ class AuthManager {
         try await Auth.auth().createUser(withEmail: email, password: password)
     }
     
+    func loginUser(email: String, password: String) async throws {
+        try await Auth.auth().signIn(withEmail: email, password: password)
+    }
+    
 }
