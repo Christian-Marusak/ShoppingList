@@ -1,12 +1,11 @@
 import UIKit
 import SwiftUI
 
-
 struct ShoppingCart {
-    let category : String
+    let category: String
     let item: String
-    let Unit : String
-    let number : Int
+    let unit: String
+    let number: Int
 }
 
 let cart = [
@@ -19,14 +18,11 @@ let cart = [
     ShoppingCart(category: "snacks", item: "Chips", Unit: "bag", number: 1),
     ShoppingCart(category: "beverages", item: "Pizza", Unit: "pcs", number: 2),
     ShoppingCart(category: "condiments", item: "Ketchup", Unit: "pcs", number: 1),
-    ShoppingCart(category: "cleaning", item: "Dish soap", Unit: "pcs", number: 1),
-]
-
+    ShoppingCart(category: "cleaning", item: "Dish soap", Unit: "pcs", number: 1)]
 
 let lookedForWord = "beverages"
 
-let filteredItems = cart.filter{$0.category == lookedForWord}
+let filteredItems = cart.filter {$0.category == lookedForWord}
 for item in filteredItems {
     print(item.item)
 }
-

@@ -7,17 +7,26 @@
 
 import SwiftUI
 
-struct ShoppingList : Equatable, Codable, Identifiable, Hashable {
-    var id : String
-    var item = String()
+struct ShoppingList: Equatable, Codable, Identifiable, Hashable {
+    var id: String
+    var item: String
     var category: Categories
-    var number = Double()
-    var value = String()
+    var number: Double
+    var value: String
     var store: StoreName
-    var isBought = Bool()
+    var isBought: Bool
     var unit: Unit
     
-    init(id: String = UUID().uuidString, item: String = String(), category: Categories, number: Double = Double(), value: String = String(), store: StoreName, isBought: Bool = Bool(), unit: Unit) {
+    init(
+        id: String = UUID().uuidString,
+        item: String,
+        category: Categories,
+        number: Double,
+        value: String = String(),
+        store: StoreName,
+        isBought: Bool = Bool(),
+        unit: Unit
+    ) {
         self.id = id
         self.item = item
         self.category = category
@@ -29,22 +38,46 @@ struct ShoppingList : Equatable, Codable, Identifiable, Hashable {
     }
     
     func updateCompletion() -> ShoppingList {
-        return ShoppingList(id: id, item: item, category: category, store: store, isBought: !isBought, unit: unit)
+        return ShoppingList(
+            id: id,
+            item: item,
+            category: category,
+            number: number,
+            store: store,
+            isBought: !isBought,
+            unit: unit
+        )
     }
     
     enum Unit: String, CaseIterable, Codable {
-        case pcs,kg,mg,g,dkg,ml,l
+        case pcs, kg, mg, g, dkg, ml, l
     }
     
     enum StoreName: String, CaseIterable, Codable {
-        case Billa, Tesco, Lidl, Biedronka, Coop, Malina, none
+        case billa, tesco, lidl, biedronka, coop, malina, none
     }
     
     enum Categories: String, CaseIterable, Codable {
-        case cereals, fish, seafood, eggs, eggProducts, fatsAndOils, sugarsAndSweets, beverages, herbsAndSpices, toiletries, other, fruits, vegetables, meat, meatProducts, milk, dairyProducts, bakery
+        case cereals
+        case fish
+        case seafood
+        case eggs
+        case eggProducts
+        case fatsAndOils
+        case sugarsAndSweets
+        case beverages
+        case herbsAndSpices
+        case toiletries
+        case other
+        case fruits
+        case vegetables
+        case meat
+        case meatProducts
+        case milk
+        case dairyProducts
+        case bakery
     }
-    
-    
+
     static func getCategoriesAsString (for category: Categories) -> String {
         switch category {
         case .cereals: return "Obilniny"
@@ -93,14 +126,15 @@ struct ShoppingList : Equatable, Codable, Identifiable, Hashable {
     
     static func gradientForStore(store: StoreName) -> LinearGradient {
         switch store {
-            //        case .Tesco: return LinearGradient(colors: [Color.blue, Color.white, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
-            //        case .Billa: return LinearGradient(colors: [Color.yellow, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
-            //        case .Malina: return LinearGradient(colors: [Color.white, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
-            //        case .Lidl: return LinearGradient(colors: [Color.yellow, Color.blue, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
-            //        case .Coop: return LinearGradient(colors: [Color.white, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
-            //        case .Biedronka: return LinearGradient(colors: [Color.yellow, Color.red], startPoint: .topLeading, endPoint: .bottomTrailing)
-            //        case .none: return LinearGradient(colors: [Color.blue, Color.blue], startPoint: .topLeading, endPoint: .bottomTrailing)
-        default: return LinearGradient(colors: [Color.blue, Color.blue, Color.blue], startPoint: .topLeading, endPoint: .bottomTrailing)
+        default: return LinearGradient(
+            colors: [
+                Color.blue,
+                Color.blue,
+                Color.blue
+            ],
+            startPoint: .topLeading,
+            endPoint: .bottomTrailing
+        )
         }
     }
     
@@ -111,17 +145,6 @@ struct ShoppingList : Equatable, Codable, Identifiable, Hashable {
     static func stringForStore(store: StoreName) -> String {
         return store.rawValue
     }
-    //    static func readFromUserDefaults<T>(key: String, defaultValue: T) -> T where T: RawRepresentable, T.RawValue == String {
-    //        if let savedValue = UserDefaults.standard.string(forKey: key) {
-    //            return T(rawValue: savedValue) ?? defaultValue
-    //        } else {
-    //            return defaultValue
-    //        }
-    //    }
-    //
-    //    static func saveToUserDefaults<T>(key: String, value: T) where T: RawRepresentable {
-    //        UserDefaults.standard.set(value.rawValue, forKey: key)
-    //    }
     static func readFromUserDefaults<T: Codable>(key: String, defaultValue: T) -> T {
         if let savedData = UserDefaults.standard.data(forKey: key),
            let savedValue = try? JSONDecoder().decode(T.self, from: savedData) {

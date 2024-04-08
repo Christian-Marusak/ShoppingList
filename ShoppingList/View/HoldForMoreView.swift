@@ -12,7 +12,7 @@ struct HoldForMoreView: View {
     @State private var isTouching = false
     @State private var secondTouch = false
     @State private var selectedOption: String?
-    @State private var options : [String] = ["rozok","maslo","vodka"]
+    @State private var options: [String] = ["rozok", "maslo", "vodka"]
     
     var body: some View {
         VStack {
@@ -38,7 +38,8 @@ struct HoldForMoreView: View {
                         DragGesture(minimumDistance: 100)
                             .onChanged { value in
                                 isTouching = true
-                                if value.location.y >= -180  && value.location.y <= -120 /*&& value.location.x >= -109 && value.location.x <= -39*/ {
+                                if value.location.y >= -180  && value.location.y <= -120
+                                /*&& value.location.x >= -109 && value.location.x <= -39*/ {
                                     print("Prva polozka")
                                     secondTouch = true
                                 } else {

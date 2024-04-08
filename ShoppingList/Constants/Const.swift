@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct C {
+struct Const {
     static var userDefaultsKey = "UserDefaults"
     static var lastUsedCategory = "categoryKey"
     static var lastUsedShop = "shopKey"

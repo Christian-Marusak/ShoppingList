@@ -9,10 +9,10 @@ import SwiftUI
 
 struct EditItemView: View {
     
-    @EnvironmentObject var myList : ShoppingViewModel
+    @EnvironmentObject var myList: ShoppingViewModel
     
     @Environment(\.dismiss) var dismiss
-    @FocusState private var isFocused : Bool
+    @FocusState private var isFocused: Bool
     @Binding var itemName: String
     @Binding var itemCategory: ShoppingList.Categories
     @Binding var itemNumber: Int
@@ -29,7 +29,9 @@ struct EditItemView: View {
     
     var body: some View {
         
-        VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/,spacing: 20, content: {
+        VStack(alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/,
+               spacing: 20,
+               content: {
             Text("How to do you want to change item?").padding(.top)
                 .font(.headline)
             TextField("Item name", text: $itemName)
@@ -44,18 +46,21 @@ struct EditItemView: View {
                 Picker("Category", selection: $itemCategory) {
                     ForEach(ShoppingList.Categories.allCases, id: \.self) { category in
                         Text(ShoppingList.getCategoriesAsString(for: category))
-                    }.onChange(of: itemCategory, { oldValue, newValue in
-                        ShoppingList.saveToUserDefaults(key: C.lastUsedCategory, value: newValue)
+                    }.onChange(of: itemCategory, { _, newValue in
+                        ShoppingList.saveToUserDefaults(key: Const.lastUsedCategory, value: newValue)
                     })
                     .onAppear {
-                        itemCategory = ShoppingList.readFromUserDefaults(key: C.lastUsedCategory, defaultValue: .beverages)
+                        itemCategory = ShoppingList.readFromUserDefaults(
+                            key: Const.lastUsedCategory,
+                            defaultValue: .beverages
+                        )
                     }
                 }.pickerStyle(.menu)
             }
             
-            HStack{
+            HStack {
                 Picker("", selection: $itemNumber) {
-                    ForEach(0...100, id: \.self){item in
+                    ForEach(0...100, id: \.self) { item in
                         Text("\(item)")
                     }
                 }
@@ -73,36 +78,39 @@ struct EditItemView: View {
                 Picker("", selection: $itemUnit) {
                     ForEach(ShoppingList.Unit.allCases, id: \.self) { unit in
                         Text(unit.rawValue)
-                    }.onChange(of: itemUnit, { oldValue, newValue in
-                        ShoppingList.saveToUserDefaults(key: C.lastUsedUnit, value: newValue)
+                    }.onChange(of: itemUnit, { _, newValue in
+                        ShoppingList.saveToUserDefaults(key: Const.lastUsedUnit, value: newValue)
                     })
                     .onAppear {
-                        itemUnit = ShoppingList.readFromUserDefaults(key: C.lastUsedUnit, defaultValue: .pcs)
+                        itemUnit = ShoppingList.readFromUserDefaults(key: Const.lastUsedUnit, defaultValue: .pcs)
                     }
                 }.pickerStyle(.wheel)
-            }.frame(width: 250,height: 100)
+            }.frame(width: 250, height: 100)
             //                }
             HStack {
                 Text("Choose shop").bold()
                 Picker("where do you buy it", selection: $itemShop) {
                     ForEach(ShoppingList.StoreName.allCases, id: \.self) { store in
                         Text(store.rawValue)
-                    }.onChange(of: itemShop, { oldValue, newValue in
-                        ShoppingList.saveToUserDefaults(key: C.lastUsedShop, value: newValue)
+                    }.onChange(of: itemShop, { _, newValue in
+                        ShoppingList.saveToUserDefaults(key: Const.lastUsedShop, value: newValue)
                         print(itemShop)
                     })
                     .onAppear {
                         // Call the setup function when the view appears
-                        itemShop = ShoppingList.readFromUserDefaults(key: C.lastUsedShop, defaultValue: .none)
+                        itemShop = ShoppingList.readFromUserDefaults(
+                            key: Const.lastUsedShop,
+                            defaultValue: .none
+                        )
                     }
                 }.pickerStyle(.automatic)
             }
-            Button(action: saveButtonPressed , label: {
+            Button(action: saveButtonPressed, label: {
                 Capsule()
-                    .frame( width: 200,height: 40)
+                    .frame( width: 200, height: 40)
                     .foregroundStyle(.blue)
                     .overlay {
-                        HStack{
+                        HStack {
                             Image(systemName: "cart.fill")
                                 .foregroundStyle(.white)
                                 .padding(.leading)
@@ -116,12 +124,37 @@ struct EditItemView: View {
     
     
     func saveButtonPressed() {
-        myList.updateList(item: ShoppingList(item: itemName, category: itemCategory, store: itemShop, unit: itemUnit))
+        myList.updateList(
+            item: ShoppingList(
+                item: itemName,
+                category: itemCategory,
+                number: Double(
+                    itemNumber
+                ),
+                store: itemShop,
+                unit: itemUnit
+            )
+        )
         dismiss()
     }
 }
 
 #Preview {
-    EditItemView(itemName: .constant("Syr"), itemCategory: .constant(.bakery), itemNumber: .constant(9), itemShop: .Biedronka, itemUnit: .kg, isPresented: .constant(false))
+    EditItemView(
+        itemName: .constant(
+            "Syr"
+        ),
+        itemCategory: .constant(
+            .bakery
+        ),
+        itemNumber: .constant(
+            9
+        ),
+        itemShop: .biedronka,
+        itemUnit: .kg,
+        isPresented: .constant(
+            false
+        )
+    )
         .environmentObject(ShoppingViewModel())
 }

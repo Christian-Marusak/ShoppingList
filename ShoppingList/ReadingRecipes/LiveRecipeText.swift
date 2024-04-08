@@ -35,7 +35,7 @@ struct LiveRecipeText: View {
                         Text("Select picture to scan")
                             .foregroundStyle(.white)
                     }
-                    .frame(width: 200,height: 40)
+                    .frame(width: 200, height: 40)
                 
             })
             
@@ -48,7 +48,7 @@ struct LiveRecipeText: View {
                         Text("scan image")
                             .foregroundStyle(.white)
                     }
-                    .frame(width: 200,height: 40)
+                    .frame(width: 200, height: 40)
                     .foregroundStyle(.red)
                 
             })
@@ -87,7 +87,7 @@ struct LiveRecipeText: View {
             // Request handler
             let handler = VNImageRequestHandler(cgImage: cgImage)
             
-            let recognizeRequest = VNRecognizeTextRequest { (request, error) in
+            let recognizeRequest = VNRecognizeTextRequest { (request, _) in
                 
                 // Parse the results as text
                 guard let result = request.results as? [VNRecognizedTextObservation] else {

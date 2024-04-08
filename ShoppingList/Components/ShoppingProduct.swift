@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ShoppingProduct: View {
     
-    @EnvironmentObject var myList : ShoppingViewModel
+    @EnvironmentObject var myList: ShoppingViewModel
     
-    @State var isBought : Bool
-    var unit : String
-    var product : String
+    @State var isBought: Bool
+    var unit: String
+    var product: String
     var number: Double
     var rectangleHeight: CGFloat = 60
     var formattedNumber: String {

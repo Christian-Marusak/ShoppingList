@@ -1,0 +1,11 @@
+trailing_whitespace:
+  ignores_empty_lines: true
+
+# rule identifiers turned on by default to exclude from running
+disabled_rules:
+- identifier_name
+- line_length
+- vertical_whitespace
+- comment_spacing
+- function_parameter_count
+- cyclomatic_complexity

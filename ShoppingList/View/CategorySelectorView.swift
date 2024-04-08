@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct CategorySelectorView: View {
-    @State var categories : Set<String>
+    @State var categories: Set<String>
     @Binding var isPresentingCategory: Bool
-    @Binding var selectedCategory : String
+    @Binding var selectedCategory: String
     
     var body: some View {
         Text("Choose a Category you want to sort")
@@ -21,7 +21,7 @@ struct CategorySelectorView: View {
         }.frame(height: 100)
         .pickerStyle(.wheel)
         .padding()
-        .onChange(of: selectedCategory) { oldValue, newValue in
+        .onChange(of: selectedCategory) { _, _ in
             isPresentingCategory = false
         }
         

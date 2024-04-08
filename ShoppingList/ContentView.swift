@@ -6,28 +6,31 @@
 //
 import SwiftUI
 import UIKit
+import FirebaseCore
+
+
 
 struct ContentView: View {
     
     
-    //MARK: State Variables
-    @EnvironmentObject var myList : ShoppingViewModel
+    // MARK: - State Variables
+    @EnvironmentObject var myList: ShoppingViewModel
     @Environment(\.editMode) private var editMode
     
     
-    @State var itemName : String = "Name"
-    @State var itemNumber : Int = 88
-    @State var itemCategory : ShoppingList.Categories = .bakery
-    @State var itemUnit : ShoppingList.Unit = .pcs
+    @State var itemName: String = "Name"
+    @State var itemNumber: Int = 88
+    @State var itemCategory: ShoppingList.Categories = .bakery
+    @State var itemUnit: ShoppingList.Unit = .pcs
     
     
     
     @State var selectedItemFromList: ShoppingList?
     @State var isPresentedAdd = false
     @State var isPresentedEdit = false
-    @State var isPresentingCategorySelector : Bool = false
+    @State var isPresentingCategorySelector: Bool = false
     @State var selectedCategory: ShoppingList.Categories = .bakery
-    @State var isOrdered : Bool = false
+    @State var isOrdered: Bool = false
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     func createJSON() {
@@ -64,10 +67,10 @@ struct ContentView: View {
         return groupedItems.keys.map { $0.rawValue.capitalized }
     }
     
-    //MARK: Main body / List
+    // MARK: - Main body / List
     
     var body: some View {
-        NavigationView (content: {
+        NavigationView(content: {
             List {
                 ForEach(myList.myShopping) { item in
                     ShoppingProduct(
@@ -83,8 +86,8 @@ struct ContentView: View {
                     }
                     
                 }
-                .onDelete(perform: myList.Delete)
-                .onMove(perform: myList.Move)
+                .onDelete(perform: myList.delete)
+                .onMove(perform: myList.move)
             }
             .navigationTitle("Shoppie")
             .toolbar {
@@ -128,7 +131,7 @@ struct ContentView: View {
             
             
             
-            .onChange(of: myList.myShopping, { oldValue, newValue in
+            .onChange(of: myList.myShopping, { _, _ in
                 //            print("Changed and saved")
                 myList.saveShoppingList()
             })
@@ -145,8 +148,17 @@ struct ContentView: View {
             }
             
         })
-        .sheet(item: $selectedItemFromList, content: { item in
-            EditItemView(myList: _myList, itemName: $itemName, itemCategory: $itemCategory, itemNumber: $itemNumber, itemShop: item.store, itemUnit: itemUnit, isPresented: $isPresentedEdit)
+        .sheet(item: $selectedItemFromList,
+               content: { item in
+            EditItemView(
+                myList: _myList,
+                itemName: $itemName,
+                itemCategory: $itemCategory,
+                itemNumber: $itemNumber,
+                itemShop: item.store,
+                itemUnit: itemUnit,
+                isPresented: $isPresentedEdit
+            )
                 .presentationDetents([.medium])
                 .presentationCornerRadius(20)
         })

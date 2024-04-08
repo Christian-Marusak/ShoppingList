@@ -9,12 +9,12 @@ import SwiftUI
 
 struct SettingsRowView: View {
     
-    var image : String
+    var image: String
     var title: String
     var tintColor: Color
     
     var body: some View {
-        HStack(spacing: 12){
+        HStack(spacing: 12) {
             Image(systemName: image)
                 .imageScale(.small)
                 .font(.title)
