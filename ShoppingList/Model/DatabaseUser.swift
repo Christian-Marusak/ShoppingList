@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+struct DatabaseUser: Codable {
+    let id: String
+    let email: String
+    let isPremium: Bool
+    let name: String
+    let dateCreated: Date
+}

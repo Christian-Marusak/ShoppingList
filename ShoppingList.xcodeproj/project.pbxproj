@@ -23,10 +23,13 @@
 		96F0C74D2B2A135F00B7C07D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0C74C2B2A135F00B7C07D /* SettingsView.swift */; };
 		96F627EA2B584DC600ABE110 /* Const.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F627E92B584DC600ABE110 /* Const.swift */; };
 		AA0E4D072B7D4F49004CDD5C /* ShoppingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0E4D062B7D4F49004CDD5C /* ShoppingViewModel.swift */; };
-		AA64B63F2BC07DB100D4A418 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AA64B63E2BC07DB100D4A418 /* GoogleService-Info.plist */; };
 		AA64B6412BC08C7500D4A418 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA64B6402BC08C7500D4A418 /* AuthManager.swift */; };
 		AA64B6442BC0A01D00D4A418 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA64B6432BC0A01D00D4A418 /* LoginView.swift */; };
 		AAA7C7242BB355C400F85CAC /* PhotoPickerController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA7C7232BB352DE00F85CAC /* PhotoPickerController.swift */; };
+		AAD4C6FE2BC68C6000FF1B35 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = AAD4C6FD2BC68C6000FF1B35 /* GoogleService-Info.plist */; };
+		AAD4C7002BC6EBE400FF1B35 /* AuthUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD4C6FF2BC6EBE400FF1B35 /* AuthUser.swift */; };
+		AAD4C7022BC6F2F000FF1B35 /* DatabaseUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD4C7012BC6F2F000FF1B35 /* DatabaseUser.swift */; };
+		AAD4C7042BC6F72100FF1B35 /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD4C7032BC6F72100FF1B35 /* UserManager.swift */; };
 		AADA70C72BC077B800AFBD27 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = AADA70C62BC077B800AFBD27 /* FirebaseAuth */; };
 		AADA70C92BC077B800AFBD27 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = AADA70C82BC077B800AFBD27 /* FirebaseFirestore */; };
 		AADA70CB2BC077B800AFBD27 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = AADA70CA2BC077B800AFBD27 /* FirebaseFirestoreSwift */; };
@@ -52,10 +55,13 @@
 		96F627E92B584DC600ABE110 /* Const.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Const.swift; sourceTree = "<group>"; };
 		AA0E4D062B7D4F49004CDD5C /* ShoppingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShoppingViewModel.swift; sourceTree = "<group>"; };
 		AA36A0832B867E51002147C1 /* TestGround.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = TestGround.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		AA64B63E2BC07DB100D4A418 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AA64B6402BC08C7500D4A418 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		AA64B6432BC0A01D00D4A418 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		AAA7C7232BB352DE00F85CAC /* PhotoPickerController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPickerController.swift; sourceTree = "<group>"; };
+		AAD4C6FD2BC68C6000FF1B35 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = SOURCE_ROOT; };
+		AAD4C6FF2BC6EBE400FF1B35 /* AuthUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUser.swift; sourceTree = SOURCE_ROOT; };
+		AAD4C7012BC6F2F000FF1B35 /* DatabaseUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseUser.swift; sourceTree = "<group>"; };
+		AAD4C7032BC6F72100FF1B35 /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
 		AAF13DA62BAB020300288D5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -76,7 +82,9 @@
 		960B06452B2B1B340097CC43 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				AAD4C6FF2BC6EBE400FF1B35 /* AuthUser.swift */,
 				969D85012B0D2C4C002EE9AB /* ShoppingList.swift */,
+				AAD4C7012BC6F2F000FF1B35 /* DatabaseUser.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -109,12 +117,13 @@
 				966062D42B1A92FD0083F2CB /* ReadingRecipes */,
 				960B06452B2B1B340097CC43 /* Model */,
 				9627E8462B065FF60000EE27 /* ContentView.swift */,
-				AA64B63E2BC07DB100D4A418 /* GoogleService-Info.plist */,
+				AAD4C6FD2BC68C6000FF1B35 /* GoogleService-Info.plist */,
 				969D84FF2B0D2A0A002EE9AB /* ShoppingListApp.swift */,
 				AA90F0282BC3175C00FF13D0 /* Auth */,
 				9627E8482B065FF70000EE27 /* Assets.xcassets */,
 				960FE8282B3DF57400433B04 /* ShoppingList.entitlements */,
 				9627E84B2B065FF70000EE27 /* Preview Content */,
+				AAD4C7032BC6F72100FF1B35 /* UserManager.swift */,
 			);
 			path = ShoppingList;
 			sourceTree = "<group>";
@@ -252,7 +261,7 @@
 			files = (
 				9627E84D2B065FF70000EE27 /* Preview Assets.xcassets in Resources */,
 				9627E8492B065FF70000EE27 /* Assets.xcassets in Resources */,
-				AA64B63F2BC07DB100D4A418 /* GoogleService-Info.plist in Resources */,
+				AAD4C6FE2BC68C6000FF1B35 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -290,6 +299,7 @@
 				9627E8472B065FF60000EE27 /* ContentView.swift in Sources */,
 				969D85042B0D2E6A002EE9AB /* CategorySelectorView.swift in Sources */,
 				969D85022B0D2C4C002EE9AB /* ShoppingList.swift in Sources */,
+				AAD4C7022BC6F2F000FF1B35 /* DatabaseUser.swift in Sources */,
 				967213A62B17C272000A9AAA /* LiveRecipeText.swift in Sources */,
 				968A7FE22B0E51F100726061 /* ShoppingProduct.swift in Sources */,
 				96732BE52B56E0CB005AE51B /* EditItemView.swift in Sources */,
@@ -299,8 +309,10 @@
 				AAA7C7242BB355C400F85CAC /* PhotoPickerController.swift in Sources */,
 				96A3CF882B4EC4FE006724BB /* HoldForMoreView.swift in Sources */,
 				96994F9B2B28B41B00C376AC /* InputView.swift in Sources */,
+				AAD4C7042BC6F72100FF1B35 /* UserManager.swift in Sources */,
 				96F0C74B2B2A129D00B7C07D /* SettingsRowView.swift in Sources */,
 				96F0C74D2B2A135F00B7C07D /* SettingsView.swift in Sources */,
+				AAD4C7002BC6EBE400FF1B35 /* AuthUser.swift in Sources */,
 				969D85002B0D2A0A002EE9AB /* ShoppingListApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

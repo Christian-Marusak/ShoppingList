@@ -33,40 +33,6 @@ struct ContentView: View {
     @State var isOrdered: Bool = false
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
-    func createJSON() {
-        let encoder = JSONEncoder()
-        do {
-            let encodedData = try encoder.encode(myList.myShopping)
-            print(String(data: encodedData, encoding: .utf8)!)
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-    }
-    
-    func filterBySection(list: [ShoppingList], section: String) -> [ShoppingList] {
-        return list.filter { $0.category.rawValue == section }
-    }
-    
-    func groupItemsByCategory(_ items: [ShoppingList]) -> [ShoppingList.Categories: [ShoppingList]] {
-        var groupedItems: [ShoppingList.Categories: [ShoppingList]] = [:]
-        
-        for item in items {
-            if var categoryItems = groupedItems[item.category] {
-                categoryItems.append(item)
-                groupedItems[item.category] = categoryItems
-            } else {
-                groupedItems[item.category] = [item]
-            }
-        }
-        
-        return groupedItems
-    }
-    
-    func generateSectionNamesFromGroups(_ groupedItems: [ShoppingList.Categories: [ShoppingList]]) -> [String] {
-        return groupedItems.keys.map { $0.rawValue.capitalized }
-    }
-    
     // MARK: - Main body / List
     
     var body: some View {

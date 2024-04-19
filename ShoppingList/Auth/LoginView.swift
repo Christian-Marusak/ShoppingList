@@ -8,9 +8,11 @@
 // MARK: - Logic behing Login View
 
 import SwiftUI
+import FirebaseAuth
 
 class LoginViewModel: ObservableObject {
     let authManager = AuthManager()
+//    let userManager = UserManager()
     @Published var loginMail: String = ""
     @Published var loginPassword = ""
     @Published var name = ""
@@ -22,8 +24,12 @@ class LoginViewModel: ObservableObject {
         if loginMail.contains("@") && loginPassword.count >= 8 {
             do {
                 try await authManager.createUser(email: loginMail, password: loginPassword)
-                loginMail = ""
-                loginPassword = ""
+                await MainActor.run {
+                    loginMail = ""
+                    loginPassword = ""
+                    name = ""
+                }
+//                try await userManager.saveToDatabase(user: DatabaseUser(id: "Test User", email: "Test@mail.com", isPremium: false, name: "Test", dateCreated: Date(timeIntervalSinceReferenceDate: .pi)))
             } catch {
                 print(error.localizedDescription)
             }
@@ -36,6 +42,11 @@ class LoginViewModel: ObservableObject {
     func callLoginUser() async {
         do {
             try await authManager.loginUser(email: loginMail, password: loginPassword)
+            await MainActor.run {
+                loginMail = ""
+                loginPassword = ""
+                name = ""
+            }
         } catch {
             print(error.localizedDescription)
         }

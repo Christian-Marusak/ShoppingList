@@ -4,9 +4,12 @@
 //
 //  Created by Christián on 14/02/2024.
 //
-
+import FirebaseFirestore
 import Foundation
+
 class ShoppingViewModel: ObservableObject {
+    
+    let db = Firestore.firestore()
     
     @Published var myShopping: [ShoppingList] = []
     @Published var boughtItems: [ShoppingList] = []
@@ -42,6 +45,41 @@ class ShoppingViewModel: ObservableObject {
         ]
         myShopping.append(contentsOf: newItems)
     }
+    
+    func createJSON() {
+        let encoder = JSONEncoder()
+        do {
+            let encodedData = try encoder.encode(myShopping)
+            print(String(data: encodedData, encoding: .utf8)!)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+    }
+    
+    func filterBySection(list: [ShoppingList], section: String) -> [ShoppingList] {
+        return list.filter { $0.category.rawValue == section }
+    }
+    
+    func groupItemsByCategory(_ items: [ShoppingList]) -> [ShoppingList.Categories: [ShoppingList]] {
+        var groupedItems: [ShoppingList.Categories: [ShoppingList]] = [:]
+        
+        for item in items {
+            if var categoryItems = groupedItems[item.category] {
+                categoryItems.append(item)
+                groupedItems[item.category] = categoryItems
+            } else {
+                groupedItems[item.category] = [item]
+            }
+        }
+        
+        return groupedItems
+    }
+    
+    func generateSectionNamesFromGroups(_ groupedItems: [ShoppingList.Categories: [ShoppingList]]) -> [String] {
+        return groupedItems.keys.map { $0.rawValue.capitalized }
+    }
+    
     func deleteItems() {
         myShopping.removeAll()
     }
@@ -52,25 +90,19 @@ class ShoppingViewModel: ObservableObject {
     func move(from: IndexSet, to: Int) {
         myShopping.move(fromOffsets: from, toOffset: to)
     }
-    func saveShoppingList() {
+    
+    func saveShoppingList() async {
         do {
-            let encodedData = try JSONEncoder().encode(myShopping)
-            print(encodedData)
-            UserDefaults.standard.set(encodedData, forKey: Const.userDefaultsKey)
+            let ref = try db.collection("lists").addDocument(from: myShopping)
+            print("Document added with ID: \(ref.documentID)")
         } catch {
-            print("Error encoding shopping list: \(error.localizedDescription)")
+            print("Error adding document: \(error)")
         }
     }
     
     // Add a function to load myShopping from UserDefaults
     func loadShoppingList() {
-        if let encodedData = UserDefaults.standard.data(forKey: Const.userDefaultsKey) {
-            do {
-                myShopping = try JSONDecoder().decode([ShoppingList].self, from: encodedData)
-            } catch {
-                print("Error decoding shopping list: \(error.localizedDescription)")
-            }
-        }
+        
     }
     
     func addItems(
