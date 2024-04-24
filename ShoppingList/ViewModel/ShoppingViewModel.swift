@@ -91,19 +91,19 @@ class ShoppingViewModel: ObservableObject {
         myShopping.move(fromOffsets: from, toOffset: to)
     }
     
-    func saveShoppingList() async {
-        do {
-            let ref = try db.collection("lists").addDocument(from: myShopping)
-            print("Document added with ID: \(ref.documentID)")
-        } catch {
-            print("Error adding document: \(error)")
-        }
-    }
+//    func saveShoppingList() async {
+//        do {
+//            let ref = try await db.collection("lists")
+//          print("Document added with ID: \(ref.documentID)")
+//        } catch {
+//          print("Error adding document: \(error)")
+//        }
+//    }
     
-    // Add a function to load myShopping from UserDefaults
-    func loadShoppingList() {
-        
-    }
+//    // Add a function to load myShopping from UserDefaults
+//    func loadShoppingList() {
+//        
+//    }
     
     func addItems(
         newItem: String,

@@ -55,11 +55,12 @@ struct ContentView: View {
                 .onDelete(perform: myList.delete)
                 .onMove(perform: myList.move)
             }
+            .padding(.top, 10)
             .navigationTitle("Shoppie")
             .toolbar {
-                
                 ToolbarItem(placement: .topBarLeading) {
                     EditButton()
+                        .bold()
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
@@ -67,22 +68,19 @@ struct ContentView: View {
                     } label: {
                         Image(systemName: isOrdered ? "chart.bar.doc.horizontal.fill" : "chart.bar.doc.horizontal")
                     }
-                    
                 }
                 ToolbarItem(placement: .bottomBar) {
                     Button("Add item") {
                         isPresentedAdd.toggle()
-                        //                        myList.getItems()
+                        myList.getItems()
                     }
                     .buttonStyle(.bordered)
                     .buttonBorderShape(.capsule)
                     .padding(.leading, 50)
-                    
                 }
                 ToolbarItem(placement: .bottomBar) {
                     Button {
-                        createJSON()
-//                        myList.DeleteItems()
+                        myList.deleteItems()
                     } label: {
                         Image(systemName: "trash.fill")
                             .resizable()
@@ -98,16 +96,10 @@ struct ContentView: View {
             
             
             .onChange(of: myList.myShopping, { _, _ in
-                //            print("Changed and saved")
-                myList.saveShoppingList()
+                // Save shopping list
             })
             .onAppear {
-                myList.loadShoppingList()
-                //            print("Showing and loading")
-            }
-            .onDisappear {
-                //            print("Disaperaing and saveing")
-                myList.saveShoppingList()
+                // load shopping list
             }
             .padding(.top, -10)
             Button("Test") {
@@ -125,8 +117,8 @@ struct ContentView: View {
                 itemUnit: itemUnit,
                 isPresented: $isPresentedEdit
             )
-                .presentationDetents([.medium])
-                .presentationCornerRadius(20)
+            .presentationDetents([.medium])
+            .presentationCornerRadius(20)
         })
         
         
