@@ -17,9 +17,9 @@ struct AddItems: View {
 
 
     @Binding var isPresentedAdd: Bool
-    @State var selectedCategory: ShoppingList.Categories = .beverages
-    @State var selectedShop: ShoppingList.StoreName = .none
-    @State var selectedUnit: ShoppingList.Unit = .kg
+    @State var selectedCategory: Categories = .beverages
+    @State var selectedShop: Item.StoreName = .none
+    @State var selectedUnit: Item.Unit = .kg
     
     var completedNumber: Double {
         print(newNumber, newSecondNumber)
@@ -43,13 +43,13 @@ struct AddItems: View {
             HStack {
                 Text("Choose category").bold()
                 Picker("Category", selection: $selectedCategory) {
-                    ForEach(ShoppingList.Categories.allCases, id: \.self) { category in
-                        Text(ShoppingList.getCategoriesAsString(for: category))
+                    ForEach(Categories.allCases, id: \.self) { category in
+                        Text(category.rawValue)
                     }.onChange(of: selectedCategory, { _, newValue in
-                        ShoppingList.saveToUserDefaults(key: Const.lastUsedCategory, value: newValue)
+                        Item.saveToUserDefaults(key: Const.lastUsedCategory, value: newValue)
                     })
                     .onAppear {
-                        selectedCategory = ShoppingList.readFromUserDefaults(
+                        selectedCategory = Item.readFromUserDefaults(
                             key: Const.lastUsedCategory,
                             defaultValue: .beverages
                         )
@@ -72,14 +72,14 @@ struct AddItems: View {
                 
                 
                 Picker("", selection: $selectedUnit) {
-                    ForEach(ShoppingList.Unit.allCases, id: \.self) { unit in
+                    ForEach(Item.Unit.allCases, id: \.self) { unit in
                         Text(unit.rawValue)
                     }.onChange(of: selectedUnit, { _, newValue in
                         print(selectedUnit)
-                        ShoppingList.saveToUserDefaults(key: Const.lastUsedUnit, value: newValue)
+                        Item.saveToUserDefaults(key: Const.lastUsedUnit, value: newValue)
                     })
                     .onAppear {
-                        selectedUnit = ShoppingList.readFromUserDefaults(key: Const.lastUsedUnit, defaultValue: .pcs)
+                        selectedUnit = Item.readFromUserDefaults(key: Const.lastUsedUnit, defaultValue: .pcs)
                     }
                 }.pickerStyle(.wheel)
             }.frame(width: 250, height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/)
@@ -87,15 +87,15 @@ struct AddItems: View {
             HStack {
                 Text("Choose shop").bold()
                 Picker("where do you buy it", selection: $selectedShop) {
-                    ForEach(ShoppingList.StoreName.allCases, id: \.self) { store in
+                    ForEach(Item.StoreName.allCases, id: \.self) { store in
                         Text(store.rawValue)
                     }.onChange(of: selectedShop, { _, newValue in
-                        ShoppingList.saveToUserDefaults(key: Const.lastUsedShop, value: newValue)
+                        Item.saveToUserDefaults(key: Const.lastUsedShop, value: newValue)
                         print(selectedShop)
                     })
                     .onAppear {
                         // Call the setup function when the view appears
-                        selectedShop = ShoppingList.readFromUserDefaults(key: Const.lastUsedShop, defaultValue: .none)
+                        selectedShop = Item.readFromUserDefaults(key: Const.lastUsedShop, defaultValue: .none)
                     }
                 }.pickerStyle(.automatic)
             }

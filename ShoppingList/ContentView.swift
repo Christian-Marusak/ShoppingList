@@ -20,16 +20,16 @@ struct ContentView: View {
     
     @State var itemName: String = "Name"
     @State var itemNumber: Int = 88
-    @State var itemCategory: ShoppingList.Categories = .bakery
-    @State var itemUnit: ShoppingList.Unit = .pcs
+    @State var itemCategory: Categories = .bakery
+    @State var itemUnit: Item.Unit = .pcs
     
     
     
-    @State var selectedItemFromList: ShoppingList?
+    @State var selectedItemFromList: Item?
     @State var isPresentedAdd = false
     @State var isPresentedEdit = false
     @State var isPresentingCategorySelector: Bool = false
-    @State var selectedCategory: ShoppingList.Categories = .bakery
+    @State var selectedCategory: Categories = .bakery
     @State var isOrdered: Bool = false
     let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
@@ -38,22 +38,7 @@ struct ContentView: View {
     var body: some View {
         NavigationView(content: {
             List {
-                ForEach(myList.myShopping) { item in
-                    ShoppingProduct(
-                        isBought: item.isBought,
-                        unit: item.unit.rawValue,
-                        product: item.item,
-                        number: item.number)
-                    .onTapGesture {
-                        withAnimation {
-                            myList.updateList(item: item)
-                            self.selectedItemFromList = item
-                        }
-                    }
-                    
-                }
-                .onDelete(perform: myList.delete)
-                .onMove(perform: myList.move)
+                list
             }
             .padding(.top, 10)
             .navigationTitle("Shoppie")
@@ -137,3 +122,40 @@ struct ContentView: View {
     ContentView()
         .environmentObject(ShoppingViewModel())
 }
+
+
+
+
+
+extension ContentView {
+    var list: some View {
+        ForEach(Categories.allCases, id: \.self) { category in
+            
+            Section {
+                ForEach(myList.myShopping) { item in
+                    if category == item.category {
+                        ShoppingProduct(
+                            isBought: item.isBought,
+                            unit: item.unit.rawValue,
+                            product: item.item,
+                            number: item.number)
+                        .onTapGesture {
+                            withAnimation {
+                                myList.updateList(item: item)
+                                self.selectedItemFromList = item
+                            }
+                        }
+                    }
+                }
+                .onDelete(perform: myList.delete)
+                
+            } header: {
+                
+                Text(category.rawValue)
+                
+            }
+            
+        }
+    }
+}
+

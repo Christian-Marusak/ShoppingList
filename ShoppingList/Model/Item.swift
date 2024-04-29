@@ -7,7 +7,28 @@
 
 import SwiftUI
 
-struct ShoppingList: Equatable, Codable, Identifiable, Hashable {
+enum Categories: String, CaseIterable, Codable {
+    case cereals = "Obilniny"
+    case fish = "Ryby"
+    case seafood = "Morské plody"
+    case eggs = "Vajcia"
+    case eggProducts = "Výrobky z vajec"
+    case fatsAndOils = "Tuky a oleje"
+    case sugarsAndSweets = "Cukry a sladkosti"
+    case beverages = "Nápoje"
+    case herbsAndSpices = "Korenie a bylinky"
+    case toiletries = "Drogéria"
+    case other = "Iné"
+    case fruits = "Ovocie"
+    case vegetables = "Zelenina"
+    case meat = "Mäso"
+    case meatProducts = "Mäsové výrobky"
+    case milk = "Mlieko"
+    case dairyProducts = "Mliečne výrobky"
+    case bakery = "Pečivo"
+}
+
+struct Item: Equatable, Codable, Identifiable, Hashable {
     var id: String
     var item: String
     var category: Categories
@@ -37,8 +58,8 @@ struct ShoppingList: Equatable, Codable, Identifiable, Hashable {
         self.unit = unit
     }
     
-    func updateCompletion() -> ShoppingList {
-        return ShoppingList(
+    func updateCompletion() -> Item {
+        return Item(
             id: id,
             item: item,
             category: category,
@@ -57,49 +78,9 @@ struct ShoppingList: Equatable, Codable, Identifiable, Hashable {
         case billa, tesco, lidl, biedronka, coop, malina, none
     }
     
-    enum Categories: String, CaseIterable, Codable {
-        case cereals
-        case fish
-        case seafood
-        case eggs
-        case eggProducts
-        case fatsAndOils
-        case sugarsAndSweets
-        case beverages
-        case herbsAndSpices
-        case toiletries
-        case other
-        case fruits
-        case vegetables
-        case meat
-        case meatProducts
-        case milk
-        case dairyProducts
-        case bakery
-    }
-
-    static func getCategoriesAsString (for category: Categories) -> String {
-        switch category {
-        case .cereals: return "Obilniny"
-        case .fish: return "Ryby"
-        case .seafood: return "Morské plody"
-        case .eggs: return "Vajcia"
-        case .eggProducts: return "Výrobky z vajec"
-        case .fatsAndOils: return "Tuky a oleje"
-        case .sugarsAndSweets: return "Cukry a sladkosti"
-        case .beverages: return "Nápoje"
-        case .herbsAndSpices: return "Korenie a bylinky"
-        case .toiletries: return "Drogéria"
-        case .other: return "Iné"
-        case .fruits: return "Ovocie"
-        case .vegetables: return "Zelenina"
-        case .meat: return "Mäso"
-        case .meatProducts: return "Mäsové výrobky"
-        case .milk: return "Mlieko"
-        case .dairyProducts: return "Mliečne výrobky"
-        case .bakery: return "Pečivo"
-        }
-    }
+    
+    
+ 
     
     func getColorForFood(groceries: Categories) -> Color {
         switch groceries {
