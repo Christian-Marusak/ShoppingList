@@ -22,7 +22,7 @@ struct ShoppingListApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView(selectedCategory: ShoppingList.Categories(rawValue: "") ?? .bakery)
+            ContentView(selectedCategory: Categories(rawValue: "") ?? .bakery)
 //            LoginView()
         }
         .environmentObject(shoppingViewModel)

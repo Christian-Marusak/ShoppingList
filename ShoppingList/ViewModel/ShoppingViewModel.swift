@@ -11,22 +11,24 @@ class ShoppingViewModel: ObservableObject {
     
     let db = Firestore.firestore()
     
-    @Published var myShopping: [ShoppingList] = []
-    @Published var boughtItems: [ShoppingList] = []
+    @Published var kategorie: [Kategorie] = [] 
+    
+    @Published var myShopping: [Item] = []
+    @Published var boughtItems: [Item] = []
     
     init() {
         getItems()
     }
     
     func getItems() {
-        let newItems = [ShoppingList(
+        let newItems = [Item(
             item: "Jogurt",
             category: .milk,
             number: 2.5,
             store: .lidl,
             isBought: false,
             unit: .kg),
-                        ShoppingList(
+                        Item(
                             item: "Rozok",
                             category: .bakery,
                             number: 15.0,
@@ -34,7 +36,7 @@ class ShoppingViewModel: ObservableObject {
                             isBought: true,
                             unit: .pcs
                         ),
-                        ShoppingList(
+                        Item(
                             item: "Olej",
                             category: .fatsAndOils,
                             number: 2.5,
@@ -57,12 +59,12 @@ class ShoppingViewModel: ObservableObject {
         
     }
     
-    func filterBySection(list: [ShoppingList], section: String) -> [ShoppingList] {
+    func filterBySection(list: [Item], section: String) -> [Item] {
         return list.filter { $0.category.rawValue == section }
     }
     
-    func groupItemsByCategory(_ items: [ShoppingList]) -> [ShoppingList.Categories: [ShoppingList]] {
-        var groupedItems: [ShoppingList.Categories: [ShoppingList]] = [:]
+    func groupItemsByCategory(_ items: [Item]) -> [Categories: [Item]] {
+        var groupedItems: [Categories: [Item]] = [:]
         
         for item in items {
             if var categoryItems = groupedItems[item.category] {
@@ -76,7 +78,7 @@ class ShoppingViewModel: ObservableObject {
         return groupedItems
     }
     
-    func generateSectionNamesFromGroups(_ groupedItems: [ShoppingList.Categories: [ShoppingList]]) -> [String] {
+    func generateSectionNamesFromGroups(_ groupedItems: [Categories: [Item]]) -> [String] {
         return groupedItems.keys.map { $0.rawValue.capitalized }
     }
     
@@ -107,13 +109,13 @@ class ShoppingViewModel: ObservableObject {
     
     func addItems(
         newItem: String,
-        newCategory: ShoppingList.Categories,
+        newCategory: Categories,
         newNumber: Double,
-        store: ShoppingList.StoreName,
+        store: Item.StoreName,
         isBought: Bool,
-        unit: ShoppingList.Unit
+        unit: Item.Unit
     ) {
-        let newItem = ShoppingList(
+        let newItem = Item(
             item: newItem,
             category: newCategory,
             number: newNumber,
@@ -124,7 +126,7 @@ class ShoppingViewModel: ObservableObject {
         myShopping.append(newItem)
     }
     
-    func updateList (item: ShoppingList) {
+    func updateList (item: Item) {
         
         if let index = myShopping.firstIndex(where: { $0.id == item.id }) {
             myShopping[index] = item.updateCompletion()
@@ -132,7 +134,7 @@ class ShoppingViewModel: ObservableObject {
         
     }
     
-    func disableItem(item: ShoppingList) {
+    func disableItem(item: Item) {
         if let index = myShopping.firstIndex(where: { $0.id == item.id }) {
             myShopping[index] = item.updateCompletion()
         }

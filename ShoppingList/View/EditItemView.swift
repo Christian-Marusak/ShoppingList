@@ -14,7 +14,7 @@ struct EditItemView: View {
     @Environment(\.dismiss) var dismiss
     @FocusState private var isFocused: Bool
     @Binding var itemName: String
-    @Binding var itemCategory: ShoppingList.Categories
+    @Binding var itemCategory: Categories
     @Binding var itemNumber: Int
     var secondItemNumber: Int {
         let strNumber = String(itemNumber)
@@ -23,8 +23,8 @@ struct EditItemView: View {
         let decimalPart = Int(decimalPartStr)!
         return decimalPart
     }
-    @State var itemShop: ShoppingList.StoreName
-    @State var itemUnit: ShoppingList.Unit
+    @State var itemShop: Item.StoreName
+    @State var itemUnit: Item.Unit
     @Binding var isPresented: Bool
     
     var body: some View {
@@ -44,13 +44,13 @@ struct EditItemView: View {
             HStack {
                 Text("Change category").bold()
                 Picker("Category", selection: $itemCategory) {
-                    ForEach(ShoppingList.Categories.allCases, id: \.self) { category in
-                        Text(ShoppingList.getCategoriesAsString(for: category))
+                    ForEach(Categories.allCases, id: \.self) { category in
+                        Text(category.rawValue)
                     }.onChange(of: itemCategory, { _, newValue in
-                        ShoppingList.saveToUserDefaults(key: Const.lastUsedCategory, value: newValue)
+                        Item.saveToUserDefaults(key: Const.lastUsedCategory, value: newValue)
                     })
                     .onAppear {
-                        itemCategory = ShoppingList.readFromUserDefaults(
+                        itemCategory = Item.readFromUserDefaults(
                             key: Const.lastUsedCategory,
                             defaultValue: .beverages
                         )
@@ -76,13 +76,13 @@ struct EditItemView: View {
                 .frame(width: 80)
                 
                 Picker("", selection: $itemUnit) {
-                    ForEach(ShoppingList.Unit.allCases, id: \.self) { unit in
+                    ForEach(Item.Unit.allCases, id: \.self) { unit in
                         Text(unit.rawValue)
                     }.onChange(of: itemUnit, { _, newValue in
-                        ShoppingList.saveToUserDefaults(key: Const.lastUsedUnit, value: newValue)
+                        Item.saveToUserDefaults(key: Const.lastUsedUnit, value: newValue)
                     })
                     .onAppear {
-                        itemUnit = ShoppingList.readFromUserDefaults(key: Const.lastUsedUnit, defaultValue: .pcs)
+                        itemUnit = Item.readFromUserDefaults(key: Const.lastUsedUnit, defaultValue: .pcs)
                     }
                 }.pickerStyle(.wheel)
             }.frame(width: 250, height: 100)
@@ -90,15 +90,15 @@ struct EditItemView: View {
             HStack {
                 Text("Choose shop").bold()
                 Picker("where do you buy it", selection: $itemShop) {
-                    ForEach(ShoppingList.StoreName.allCases, id: \.self) { store in
+                    ForEach(Item.StoreName.allCases, id: \.self) { store in
                         Text(store.rawValue)
                     }.onChange(of: itemShop, { _, newValue in
-                        ShoppingList.saveToUserDefaults(key: Const.lastUsedShop, value: newValue)
+                        Item.saveToUserDefaults(key: Const.lastUsedShop, value: newValue)
                         print(itemShop)
                     })
                     .onAppear {
                         // Call the setup function when the view appears
-                        itemShop = ShoppingList.readFromUserDefaults(
+                        itemShop = Item.readFromUserDefaults(
                             key: Const.lastUsedShop,
                             defaultValue: .none
                         )
@@ -125,7 +125,7 @@ struct EditItemView: View {
     
     func saveButtonPressed() {
         myList.updateList(
-            item: ShoppingList(
+            item: Item(
                 item: itemName,
                 category: itemCategory,
                 number: Double(
