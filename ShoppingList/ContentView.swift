@@ -57,7 +57,7 @@ struct ContentView: View {
                 ToolbarItem(placement: .bottomBar) {
                     Button("Add item") {
                         isPresentedAdd.toggle()
-                        myList.getItems()
+                        //                        myList.getMockDataItems()
                     }
                     .buttonStyle(.bordered)
                     .buttonBorderShape(.capsule)
@@ -129,33 +129,38 @@ struct ContentView: View {
 
 extension ContentView {
     var list: some View {
-        ForEach(Categories.allCases, id: \.self) { category in
+        ForEach(myList.shoppingList) { typeOfFood in
             
             Section {
-                ForEach(myList.myShopping) { item in
-                    if category == item.category {
+                ForEach(typeOfFood.items) { item in
+                    if typeOfFood.category == item.category {
                         ShoppingProduct(
                             isBought: item.isBought,
                             unit: item.unit.rawValue,
                             product: item.item,
                             number: item.number)
+                        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+                            Button("Delete", role: .destructive) {
+                                withAnimation {
+                                    myList.deleteItem(typeOfFood: typeOfFood, item: item)
+                                }
+                            }
+                        }
                         .onTapGesture {
                             withAnimation {
-                                myList.updateList(item: item)
-                                self.selectedItemFromList = item
+                                //                                myList.updateList(item: item)
+                                //                                self.selectedItemFromList = item
                             }
                         }
                     }
                 }
-                .onDelete(perform: myList.delete)
-                
             } header: {
-                
-                Text(category.rawValue)
-                
+                Text(typeOfFood.category.rawValue)
             }
-            
         }
     }
 }
 
+extension ContentView {
+   
+}

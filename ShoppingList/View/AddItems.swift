@@ -117,7 +117,7 @@ struct AddItems: View {
         })
     }
     func saveButtonPressed() {
-        myList.addItems(
+        myList.addItem(
             newItem: newItem,
             newCategory: selectedCategory,
             newNumber: completedNumber,
@@ -126,11 +126,7 @@ struct AddItems: View {
             unit: selectedUnit
         )
         isPresentedAdd.toggle()
-        
     }
-    
-    
-    
 }
 
 

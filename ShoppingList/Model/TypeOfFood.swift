@@ -7,9 +7,8 @@
 
 import Foundation
 
-var array: [Kategorie] = []
-
-struct Kategorie {
-    var shoppingList: [Item]
+struct TypeOfFood: Identifiable {
+    var id: String = UUID().uuidString
+    var items: [Item]
     var category: Categories
 }
