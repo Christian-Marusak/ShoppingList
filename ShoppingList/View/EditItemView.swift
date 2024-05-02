@@ -10,22 +10,9 @@ import SwiftUI
 struct EditItemView: View {
     
     @EnvironmentObject var myList: ShoppingViewModel
-    
+    @ObservedObject var editModel = EditItemViewModel()
     @Environment(\.dismiss) var dismiss
-    @FocusState private var isFocused: Bool
-    @Binding var itemName: String
-    @Binding var itemCategory: Categories
-    @Binding var itemNumber: Int
-    var secondItemNumber: Int {
-        let strNumber = String(itemNumber)
-        let decimalIndex = strNumber.firstIndex(of: ".")!
-        let decimalPartStr = strNumber[decimalIndex...]
-        let decimalPart = Int(decimalPartStr)!
-        return decimalPart
-    }
-    @State var itemShop: Item.StoreName
-    @State var itemUnit: Item.Unit
-    @Binding var isPresented: Bool
+    
     
     var body: some View {
         

@@ -4,8 +4,9 @@
 //
 //  Created by Christián on 14/02/2024.
 //
-import FirebaseFirestore
+
 import Foundation
+import Firebase
 
 class ShoppingViewModel: ObservableObject {
     
@@ -20,12 +21,14 @@ class ShoppingViewModel: ObservableObject {
         getMockDataItems()
     }
     
-    func addItem(newItem: String,
-                     newCategory: Categories,
-                     newNumber: Double,
-                     store: Item.StoreName,
-                     isBought: Bool,
-                     unit: Item.Unit) {
+    func addItem(
+        newItem: String,
+        newCategory: Categories,
+        newNumber: Double,
+        store: Item.StoreName,
+        isBought: Bool,
+        unit: Item.Unit
+    ) {
         let newItem = Item(item: newItem,
                            category: newCategory,
                            number: newNumber,

@@ -16,22 +16,8 @@ struct ContentView: View {
     // MARK: - State Variables
     @EnvironmentObject var myList: ShoppingViewModel
     @Environment(\.editMode) private var editMode
+    @ObservedObject var contentModel = ContentViewModel()
     
-    
-    @State var itemName: String = "Name"
-    @State var itemNumber: Int = 88
-    @State var itemCategory: Categories = .bakery
-    @State var itemUnit: Item.Unit = .pcs
-    
-    
-    
-    @State var selectedItemFromList: Item?
-    @State var isPresentedAdd = false
-    @State var isPresentedEdit = false
-    @State var isPresentingCategorySelector: Bool = false
-    @State var selectedCategory: Categories = .bakery
-    @State var isOrdered: Bool = false
-    let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
     
     // MARK: - Main body / List
     
@@ -49,14 +35,14 @@ struct ContentView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        isOrdered.toggle()
+                        contentModel.isOrdered.toggle()
                     } label: {
-                        Image(systemName: isOrdered ? "chart.bar.doc.horizontal.fill" : "chart.bar.doc.horizontal")
+                        Image(systemName: contentModel.isOrdered ? "chart.bar.doc.horizontal.fill" : "chart.bar.doc.horizontal")
                     }
                 }
                 ToolbarItem(placement: .bottomBar) {
                     Button("Add item") {
-                        isPresentedAdd.toggle()
+                        contentModel.isPresentedAdd.toggle()
                         //                        myList.getMockDataItems()
                     }
                     .buttonStyle(.bordered)
@@ -77,9 +63,6 @@ struct ContentView: View {
                     .padding(.trailing, 50)
                 }
             }
-            
-            
-            
             .onChange(of: myList.myShopping, { _, _ in
                 // Save shopping list
             })
@@ -88,49 +71,40 @@ struct ContentView: View {
             }
             .padding(.top, -10)
             Button("Test") {
+                
             }
             
         })
-        .sheet(item: $selectedItemFromList,
+        .sheet(item: contentModel.$selectedItemFromList,
                content: { item in
             EditItemView(
                 myList: _myList,
-                itemName: $itemName,
-                itemCategory: $itemCategory,
-                itemNumber: $itemNumber,
+                itemName: contentModel.$itemName,
+                itemCategory: contentModel.$itemCategory,
+                itemNumber: contentModel.$itemNumber,
                 itemShop: item.store,
-                itemUnit: itemUnit,
-                isPresented: $isPresentedEdit
+                itemUnit: contentModel.itemUnit,
+                isPresented: contentModel.$isPresentedEdit
             )
             .presentationDetents([.medium])
             .presentationCornerRadius(20)
         })
-        
-        
-        .sheet(isPresented: $isPresentedAdd, content: {
-            AddItems(isPresentedAdd: $isPresentedAdd)
+        .sheet(isPresented: contentModel.$isPresentedAdd, content: {
+            AddItems(isPresentedAdd: contentModel.$isPresentedAdd)
                 .presentationDetents([.medium])
                 .presentationCornerRadius(20)
-            
         })
     }
-    
 }
-
 
 #Preview {
     ContentView()
         .environmentObject(ShoppingViewModel())
 }
 
-
-
-
-
 extension ContentView {
     var list: some View {
         ForEach(myList.shoppingList) { typeOfFood in
-            
             Section {
                 ForEach(typeOfFood.items) { item in
                     if typeOfFood.category == item.category {
@@ -159,8 +133,4 @@ extension ContentView {
             }
         }
     }
-}
-
-extension ContentView {
-   
 }
