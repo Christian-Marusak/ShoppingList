@@ -11,10 +11,10 @@ import SwiftUI
 class EditItemViewModel: ObservableObject {
     
     
-    @FocusState private var isFocused: Bool
-    @Binding var itemName: String
-    @Binding var itemCategory: Categories
-    @Binding var itemNumber: Int
+    var isFocused: Bool
+    var itemName: String
+    var itemCategory: Categories
+    var itemNumber: Int
     var secondItemNumber: Int {
         let strNumber = String(itemNumber)
         let decimalIndex = strNumber.firstIndex(of: ".")!
@@ -24,7 +24,7 @@ class EditItemViewModel: ObservableObject {
     }
     @State var itemShop: Item.StoreName
     @State var itemUnit: Item.Unit
-    @Binding var isPresented: Bool
+    var isPresented: Bool
     
     
     init(isFocused: Bool, itemName: String, itemCategory: Categories, itemNumber: Int, itemShop: Item.StoreName, itemUnit: Item.Unit, isPresented: Bool) {

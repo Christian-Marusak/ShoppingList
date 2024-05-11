@@ -10,7 +10,7 @@ import SwiftUI
 struct EditItemView: View {
     
     @EnvironmentObject var myList: ShoppingViewModel
-    @ObservedObject var editModel = EditItemViewModel()
+    @ObservedObject var editModel: EditItemViewModel
     @Environment(\.dismiss) var dismiss
     
     
@@ -21,23 +21,23 @@ struct EditItemView: View {
                content: {
             Text("How to do you want to change item?").padding(.top)
                 .font(.headline)
-            TextField("Item name", text: $itemName)
+            TextField("Item name", text: $editModel.itemName)
                 .textFieldStyle(.roundedBorder)
                 .padding(.horizontal)
-                .focused($isFocused)
+                .focused($editModel.isFocused)
                 .onAppear(perform: {
-                    isFocused.toggle()
+                    editModel.isFocused.toggle()
                 })
             HStack {
                 Text("Change category").bold()
-                Picker("Category", selection: $itemCategory) {
+                Picker("Category", selection: editModel.$itemCategory) {
                     ForEach(Categories.allCases, id: \.self) { category in
                         Text(category.rawValue)
-                    }.onChange(of: itemCategory, { _, newValue in
+                    }.onChange(of: editModel.itemCategory, { _, newValue in
                         Item.saveToUserDefaults(key: Const.lastUsedCategory, value: newValue)
                     })
                     .onAppear {
-                        itemCategory = Item.readFromUserDefaults(
+                        editModel.itemCategory = Item.readFromUserDefaults(
                             key: Const.lastUsedCategory,
                             defaultValue: .beverages
                         )
@@ -46,7 +46,7 @@ struct EditItemView: View {
             }
             
             HStack {
-                Picker("", selection: $itemNumber) {
+                Picker("", selection: editModel.$itemNumber) {
                     ForEach(0...100, id: \.self) { item in
                         Text("\(item)")
                     }
@@ -62,30 +62,30 @@ struct EditItemView: View {
                 .pickerStyle(.wheel)
                 .frame(width: 80)
                 
-                Picker("", selection: $itemUnit) {
+                Picker("", selection: editModel.$itemUnit) {
                     ForEach(Item.Unit.allCases, id: \.self) { unit in
                         Text(unit.rawValue)
-                    }.onChange(of: itemUnit, { _, newValue in
+                    }.onChange(of: editModel.itemUnit, { _, newValue in
                         Item.saveToUserDefaults(key: Const.lastUsedUnit, value: newValue)
                     })
                     .onAppear {
-                        itemUnit = Item.readFromUserDefaults(key: Const.lastUsedUnit, defaultValue: .pcs)
+                        editModel.itemUnit = Item.readFromUserDefaults(key: Const.lastUsedUnit, defaultValue: .pcs)
                     }
                 }.pickerStyle(.wheel)
             }.frame(width: 250, height: 100)
             //                }
             HStack {
                 Text("Choose shop").bold()
-                Picker("where do you buy it", selection: $itemShop) {
+                Picker("where do you buy it", selection: editModel.$itemShop) {
                     ForEach(Item.StoreName.allCases, id: \.self) { store in
                         Text(store.rawValue)
-                    }.onChange(of: itemShop, { _, newValue in
+                    }.onChange(of: editModel.itemShop, { _, newValue in
                         Item.saveToUserDefaults(key: Const.lastUsedShop, value: newValue)
-                        print(itemShop)
+                        print(editModel.itemShop)
                     })
                     .onAppear {
                         // Call the setup function when the view appears
-                        itemShop = Item.readFromUserDefaults(
+                        editModel.itemShop = Item.readFromUserDefaults(
                             key: Const.lastUsedShop,
                             defaultValue: .none
                         )
@@ -113,13 +113,13 @@ struct EditItemView: View {
     func saveButtonPressed() {
         myList.updateList(
             item: Item(
-                item: itemName,
-                category: itemCategory,
+                item: editModel.itemName,
+                category: editModel.itemCategory,
                 number: Double(
-                    itemNumber
+                    editModel.itemNumber
                 ),
-                store: itemShop,
-                unit: itemUnit
+                store: editModel.itemShop,
+                unit: editModel.itemUnit
             )
         )
         dismiss()
@@ -127,21 +127,7 @@ struct EditItemView: View {
 }
 
 #Preview {
-    EditItemView(
-        itemName: .constant(
-            "Syr"
-        ),
-        itemCategory: .constant(
-            .bakery
-        ),
-        itemNumber: .constant(
-            9
-        ),
-        itemShop: .biedronka,
-        itemUnit: .kg,
-        isPresented: .constant(
-            false
-        )
-    )
+    EditItemView()
+    
         .environmentObject(ShoppingViewModel())
 }

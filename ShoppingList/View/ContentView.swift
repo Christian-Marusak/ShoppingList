@@ -78,13 +78,13 @@ struct ContentView: View {
         .sheet(item: contentModel.$selectedItemFromList,
                content: { item in
             EditItemView(
-                myList: _myList,
-                itemName: contentModel.$itemName,
-                itemCategory: contentModel.$itemCategory,
-                itemNumber: contentModel.$itemNumber,
-                itemShop: item.store,
-                itemUnit: contentModel.itemUnit,
-                isPresented: contentModel.$isPresentedEdit
+//                myList: _myList,
+//                itemName: contentModel.$itemName,
+//                itemCategory: contentModel.$itemCategory,
+//                itemNumber: contentModel.$itemNumber,
+//                itemShop: item.store,
+//                itemUnit: contentModel.itemUnit,
+//                isPresented: contentModel.$isPresentedEdit
             )
             .presentationDetents([.medium])
             .presentationCornerRadius(20)

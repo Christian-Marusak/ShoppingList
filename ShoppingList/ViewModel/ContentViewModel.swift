@@ -9,13 +9,11 @@ import Foundation
 import SwiftUI
 
 class ContentViewModel: ObservableObject {
+    
     @State var itemName: String = "Name"
     @State var itemNumber: Int = 88
     @State var itemCategory: Categories = .bakery
     @State var itemUnit: Item.Unit = .pcs
-    
-    
-    
     @State var selectedItemFromList: Item?
     @State var isPresentedAdd = false
     @State var isPresentedEdit = false
