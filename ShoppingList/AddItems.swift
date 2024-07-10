@@ -6,47 +6,48 @@
 //
 
 import SwiftUI
-//
-//struct AddItems: View {
-//    
-//    @State private var newItem : String = ""
-//    @State private var newCategory : String = ""
-//    @State private var newNumber : Int = 0
-//    @State private var store: String = ""
-//    @Binding var isPresented: Bool
-//    
-//    
-//    var body: some View {
-//        Form {
-//            Section("Enter item and category") {
-//                TextField("Item name", text: $newItem)
-//                TextField("Category name", text: $newCategory)
-//            }
-//            Section("Choose number of items") {
-//                Picker("Number of pieces", selection: $newNumber) {
-//                    ForEach(0...10, id: \.self) { number in
-//                        Text("\(number)")
-//                    }
-//                }.pickerStyle(.menu)
-//                Picker("where do you buy it", selection: $selectedShop) {
-//                    ForEach(ShoppingList.StoreName.allCases, id: \.self) { store in
-//                        Text(store.rawValue)
-//                    }
-//                }.pickerStyle(.menu)
-//            }
-//            Button("Add items to your shopping list"){
-//                let list = ShoppingList(item: newItem, category: newCategory, number: newNumber, store: selectedShop)
-//                itemsInputCompletion(list)
-//                newItem = ""
-//                newNumber = 0
-//                newCategory = ""
-//                isPresented = false
-//                
-//            }
-//        }
-//    }
-//}
-//
-//#Preview {
-//    AddItems(selectedShop: .Coop, itemsInputCompletion: { _ in }, freeList: .constant(([])), isPresented: .constant(false))
-//}
+
+struct AddItems: View {
+    
+    @StateObject var viewModel: AddItemsVM
+    
+    var body: some View {
+        Form {
+            Section("Enter item and category") {
+                TextField("Item name", text: $viewModel.newItem)
+                TextField("Category name", text: $viewModel.newCategory)
+            }
+            
+            Section {
+                Picker("Choose number of items", selection: $viewModel.newNumber) {
+                    ForEach(0...10, id: \.self) { number in
+                        Text("\(number)")
+                    }
+                }
+                
+            }
+            Picker("title", selection: $viewModel.newStore) {
+                ForEach(ListModel.StoreName.allCases, id: \.self) { store in
+                    Text(store.rawValue)
+                }
+            }
+        }
+        Button("Add items to your shopping list"){
+            let list = ListModel(
+                item: viewModel.newItem,
+                category: viewModel.newCategory,
+                number: viewModel.newNumber,
+                store: viewModel.newStore
+            )
+            ShoppingMockData().addData(list)
+                            viewModel.newItem = ""
+                            viewModel.newNumber = 0
+                            viewModel.newCategory = ""
+                            viewModel.isPresented = false
+                        }
+        }
+    }
+
+#Preview {
+    AddItems(viewModel: AddItemsVM(newItem: "Here is new item", newCategory: "Here is new category", newNumber: 3, newStore: .Coop, isPresented: false))
+}

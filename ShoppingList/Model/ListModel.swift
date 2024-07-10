@@ -15,7 +15,7 @@ struct ListModel: Identifiable, Hashable {
     
 
     
-    enum StoreName: String, CaseIterable, Codable {
+    enum StoreName: String, CaseIterable, Codable{
         case Billa, Tesco, Lidl, Biedronka, Coop, Malina, none
     }
     
@@ -54,5 +54,10 @@ final class ShoppingMockData: ObservableObject {
     
     init() {
         data = localData
+    }
+    
+    func addData(_ list: ListModel) {
+        data.append(list)
+        print(data)
     }
 }
