@@ -38,7 +38,9 @@ struct ContentView: View {
                 ShoppingProduct(product: list.item, category: list.category, number: list.number)
             }
             .listStyle(.plain)
-        }
+        }.sheet(isPresented: $viewModel.isPresented, content: {
+            AddItems()
+        })
         Button("Add item") {
             viewModel.isPresented.toggle()
         }.buttonStyle(.bordered)

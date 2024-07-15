@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddItems: View {
     
-    @StateObject var viewModel: AddItemsVM
+    @StateObject var viewModel: AddItemsVM = AddItemsVM(newItem: "NewItem", newCategory: "New category", newNumber: 4, newStore: .Billa, isPresented: false)
     
     var body: some View {
         Form {
@@ -40,10 +40,6 @@ struct AddItems: View {
                 store: viewModel.newStore
             )
             ShoppingMockData().addData(list)
-                            viewModel.newItem = ""
-                            viewModel.newNumber = 0
-                            viewModel.newCategory = ""
-                            viewModel.isPresented = false
                         }
         }
     }

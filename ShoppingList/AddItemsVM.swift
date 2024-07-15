@@ -21,4 +21,13 @@ final class AddItemsVM: Identifiable, ObservableObject {
         self.newStore = newStore
         self.isPresented = isPresented
     }
+    
+    func clean() {
+        newItem = ""
+        newCategory = ""
+        newNumber = .zero
+        newStore = .none
+        isPresented = false
+        
+    }
 }

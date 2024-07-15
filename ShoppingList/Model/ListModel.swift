@@ -58,6 +58,8 @@ final class ShoppingMockData: ObservableObject {
     
     func addData(_ list: ListModel) {
         data.append(list)
+        print(list)
+        print("________________________")
         print(data)
     }
 }
