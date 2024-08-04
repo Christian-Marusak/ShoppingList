@@ -18,6 +18,8 @@
 		96F0C74B2B2A129D00B7C07D /* SettingsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 96F0C74A2B2A129D00B7C07D /* SettingsRowView.swift */; };
 		AA05495B2C3406980043F82B /* ListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA05495A2C3406980043F82B /* ListModel.swift */; };
 		AA05495D2C36E18B0043F82B /* ListViewVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA05495C2C36E18B0043F82B /* ListViewVM.swift */; };
+		AAAF03BC2C602B5F0086E1E1 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAF03BB2C602B5F0086E1E1 /* TabBarView.swift */; };
+		AAAF03BE2C602FFB0086E1E1 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAF03BD2C602FFB0086E1E1 /* SettingsView.swift */; };
 		AAC0C68B2C39F25100730E72 /* AddItemsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC0C68A2C39F25100730E72 /* AddItemsVM.swift */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +37,8 @@
 		96F0C74A2B2A129D00B7C07D /* SettingsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRowView.swift; sourceTree = "<group>"; };
 		AA05495A2C3406980043F82B /* ListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListModel.swift; sourceTree = "<group>"; };
 		AA05495C2C36E18B0043F82B /* ListViewVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewVM.swift; sourceTree = "<group>"; };
+		AAAF03BB2C602B5F0086E1E1 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		AAAF03BD2C602FFB0086E1E1 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		AAC0C68A2C39F25100730E72 /* AddItemsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemsVM.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -78,6 +82,8 @@
 			children = (
 				AA05495C2C36E18B0043F82B /* ListViewVM.swift */,
 				9627E8462B065FF60000EE27 /* ListView.swift */,
+				AAAF03BB2C602B5F0086E1E1 /* TabBarView.swift */,
+				AAAF03BD2C602FFB0086E1E1 /* SettingsView.swift */,
 				969D85032B0D2E6A002EE9AB /* CategorySelectorView.swift */,
 				965442052B0D190B00780701 /* AddItems.swift */,
 				AAC0C68A2C39F25100730E72 /* AddItemsVM.swift */,
@@ -184,6 +190,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA05495B2C3406980043F82B /* ListModel.swift in Sources */,
+				AAAF03BC2C602B5F0086E1E1 /* TabBarView.swift in Sources */,
 				9627E8472B065FF60000EE27 /* ListView.swift in Sources */,
 				969D85042B0D2E6A002EE9AB /* CategorySelectorView.swift in Sources */,
 				AAC0C68B2C39F25100730E72 /* AddItemsVM.swift in Sources */,
@@ -191,6 +198,7 @@
 				965442062B0D190B00780701 /* AddItems.swift in Sources */,
 				96994F9B2B28B41B00C376AC /* InputView.swift in Sources */,
 				AA05495D2C36E18B0043F82B /* ListViewVM.swift in Sources */,
+				AAAF03BE2C602FFB0086E1E1 /* SettingsView.swift in Sources */,
 				96F0C74B2B2A129D00B7C07D /* SettingsRowView.swift in Sources */,
 				969D85002B0D2A0A002EE9AB /* ShoppingListApp.swift in Sources */,
 			);
