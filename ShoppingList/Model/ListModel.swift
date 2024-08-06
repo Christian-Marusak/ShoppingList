@@ -62,4 +62,8 @@ final class ShoppingMockData: ObservableObject {
         print("________________________")
         print(data)
     }
+    
+    func remove(at offsets: IndexSet) {
+        data.remove(atOffsets: offsets)
+    }
 }

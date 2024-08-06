@@ -19,6 +19,27 @@ struct ContentView: View {
         NavigationStack {
             List(viewModel.shopModel.data) { list in
                 ShoppingProduct(product: list.item, category: list.category, number: list.number)
+                    .swipeActions(edge: .leading, content: {
+                        Button(role: .destructive,action: {
+                            if let index = viewModel.shopModel.data.firstIndex(where: {$0.id == list.id}) {
+                                viewModel.shopModel.remove(at: IndexSet(integer: index))
+                                print("----------------------------")
+                                print("Deleting item \(list.item)")
+                                print("----------------------------")
+                            }
+                        }, label: {
+                            Image(systemName: "trash.fill")
+                                
+                        })
+                    })
+                    .swipeActions(edge: .trailing) {
+                        Button(action: {
+                            print("Editing item")
+                        }, label: {
+                            Image(systemName: "pencil")
+                                .tint(.accentColor)
+                        })
+                    }
             }
             .listStyle(.plain)
             .navigationTitle("Shopping list")

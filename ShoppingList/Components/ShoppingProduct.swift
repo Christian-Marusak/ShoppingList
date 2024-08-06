@@ -37,6 +37,6 @@ struct ShoppingProduct: View {
     
 }
 
-#Preview {
-    ShoppingProduct()
+#Preview(traits: .sizeThatFitsLayout) {
+        ShoppingProduct()
 }
