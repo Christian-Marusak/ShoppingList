@@ -8,26 +8,25 @@
 import SwiftUI
 
 struct ShoppingProduct: View {
-    var product : String = "Produkt"
-    var category: String = "Kategoria"
-    var number: Int = 2
+    
+    let item: ListModel
     var rectangleHeight: CGFloat = 60
     var backroundColor : Bool = false
     
     
     var body: some View {
         RoundedRectangle(cornerRadius: 20)
-            .fill(.blue)
+            .fill(item.bought == true ? .red : .blue)
             .overlay {
                 HStack{
-                    Text(product)
+                    Text(item.item)
                         .foregroundStyle(.white)
                         .bold()
                     Spacer()
-                    Text(category)
+                    Text(item.category)
                         .foregroundStyle(.white)
                     Spacer()
-                    Text(String(number))
+                    Text(String(item.number))
                         .foregroundStyle(.white)
                 }
                 .padding([.leading,.trailing])
@@ -38,5 +37,5 @@ struct ShoppingProduct: View {
 }
 
 #Preview(traits: .sizeThatFitsLayout) {
-        ShoppingProduct()
+    ShoppingProduct(item: ListModel(item: "Item", category: "category", number: 2, store: .Billa, bought: false))
 }

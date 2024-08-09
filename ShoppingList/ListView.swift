@@ -8,7 +8,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @StateObject var viewModel: ListViewVM
+    var viewModel: ListViewVM
     
     
     
@@ -18,14 +18,21 @@ struct ContentView: View {
 
         NavigationStack {
             List(viewModel.shopModel.data) { list in
-                ShoppingProduct(product: list.item, category: list.category, number: list.number)
+                ShoppingProduct(item: list)
+                    .onTapGesture(count: 2, perform: {
+                        print("----------------------------")
+                        print("Taping item \(list.item)")
+                        print("Actual status \(list.bought)")
+                        print("----------------------------")
+                        if let index = viewModel.shopModel.data.firstIndex(where: {$0.id == list.id}) {
+                            viewModel.shopModel.data[index].bought.toggle()
+                        }
+                        
+                    })
                     .swipeActions(edge: .leading, content: {
                         Button(role: .destructive,action: {
                             if let index = viewModel.shopModel.data.firstIndex(where: {$0.id == list.id}) {
                                 viewModel.shopModel.remove(at: IndexSet(integer: index))
-                                print("----------------------------")
-                                print("Deleting item \(list.item)")
-                                print("----------------------------")
                             }
                         }, label: {
                             Image(systemName: "trash.fill")
@@ -77,12 +84,12 @@ struct ContentView: View {
                 }
             })
         }
-        .sheet(isPresented: $viewModel.isPresented, content: {
+        .sheet(isPresented: viewModel.isPresented, content: {
             AddItems()
         })
         
     }
 }
 #Preview {
-    ContentView(viewModel: ListViewVM(isPresentingCategorySelector: false, selectedCategory: "Kategory"))
+    ContentView(viewModel: ListViewVM(shopModel: ShoppingMockData(), isPresentingCategorySelector: false, selectedCategory: "Kategory"))
 }

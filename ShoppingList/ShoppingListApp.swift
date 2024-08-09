@@ -13,7 +13,7 @@ struct ShoppingListApp: App {
     var body: some Scene {
         WindowGroup {
 //            ContentView(viewModel: ListViewVM(isPresentingCategorySelector: false, selectedCategory: "kategoru"))
-            TabBarView()
+            TabBarView(shopingData: ShoppingMockData())
         }
     }
 }
