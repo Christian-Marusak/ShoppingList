@@ -12,8 +12,7 @@ import SwiftUI
 struct ShoppingListApp: App {
     var body: some Scene {
         WindowGroup {
-//            ContentView(viewModel: ListViewVM(isPresentingCategorySelector: false, selectedCategory: "kategoru"))
-            TabBarView(shopingData: ShoppingMockData())
+            TabBarView()
         }
     }
 }

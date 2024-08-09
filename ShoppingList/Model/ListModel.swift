@@ -25,7 +25,7 @@ struct ListModel: Identifiable, Hashable {
     }
 }
 
-@Observable
+//@Observable
 final class ShoppingMockData {
     
 //    @Published var data: [ListModel]
@@ -46,6 +46,13 @@ final class ShoppingMockData {
 //    init() {
 //        data = localData
 //    }
+    
+    static var shared = ShoppingMockData()
+    
+    
+    func loadData() -> [ListModel]{
+        return data
+    }
     
     func addData(_ list: ListModel) {
         data.append(list)

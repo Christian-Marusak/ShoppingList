@@ -8,8 +8,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    var viewModel: ListViewVM
-    
+    var viewModel: ListViewVM = .init()
     
     
     //MARK: Main content / List of items
@@ -17,26 +16,24 @@ struct ContentView: View {
     var body: some View {
 
         NavigationStack {
-            List(viewModel.shopModel.data) { list in
+            List(viewModel.data) { list in
                 ShoppingProduct(item: list)
                     .onTapGesture(count: 2, perform: {
                         print("----------------------------")
-                        print("Taping item \(list.item)")
-                        print("Actual status \(list.bought)")
+//                        print("Taping item \(list.item)")
+//                        print("Actual status \(list.bought)")
                         print("----------------------------")
-                        if let index = viewModel.shopModel.data.firstIndex(where: {$0.id == list.id}) {
-                            viewModel.shopModel.data[index].bought.toggle()
-                        }
-                        
+//                        if let index = viewModel.data.firstIndex(where: {$0.id == list.id}) {
+//                            viewModel.data[index].bought.toggle()
+//                        }
                     })
                     .swipeActions(edge: .leading, content: {
                         Button(role: .destructive,action: {
-                            if let index = viewModel.shopModel.data.firstIndex(where: {$0.id == list.id}) {
-                                viewModel.shopModel.remove(at: IndexSet(integer: index))
+                            if let index = viewModel.data.firstIndex(where: {$0.id == list.id}) {
+                                viewModel.removeData(index: IndexSet(integer: index))
                             }
                         }, label: {
                             Image(systemName: "trash.fill")
-                                
                         })
                     })
                     .swipeActions(edge: .trailing) {
@@ -53,7 +50,7 @@ struct ContentView: View {
             .toolbar(content: {
                 ToolbarItem(placement: .topBarLeading) {
                     Button{
-                        viewModel.isPresentingCategorySelector.toggle()
+                        print("Buttton")
                     } label:{
                         Image(systemName: "list.bullet")
                     }
@@ -70,26 +67,31 @@ struct ContentView: View {
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        viewModel.isHidden.toggle()
+                        print("Buttton")
                     } label:{
-                        Image(systemName: viewModel.isHidden ? "eye.slash" : "eye").animation(.interactiveSpring, value: viewModel.isHidden)
+                        Image(systemName: "eye")
+//                        Image(systemName: viewModel.isHidden ? "eye.slash" : "eye").animation(.interactiveSpring, value: viewModel.isHidden)
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
-                        viewModel.isPresented.toggle()
+//                        viewModel.isPresented.toggle()
+                        print("Buttton")
                     }label: {
                         Image(systemName: "plus")
                     }.bold()
                 }
             })
         }
-        .sheet(isPresented: viewModel.isPresented, content: {
-            AddItems()
+        .onAppear(perform: {
+            viewModel.loadData()
         })
-        
+//        .sheet(isPresented: viewModel.isPresented, content: {
+//            AddItems()
+//        })
+        .badge(viewModel.data.count)
     }
 }
 #Preview {
-    ContentView(viewModel: ListViewVM(shopModel: ShoppingMockData(), isPresentingCategorySelector: false, selectedCategory: "Kategory"))
+    ContentView()
 }

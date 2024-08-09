@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct TabBarView: View {
-    var shopingData: ShoppingMockData
+    
     var body: some View {
         TabView {
-            ContentView(viewModel: .init(shopModel: ShoppingMockData(), isPresentingCategorySelector: false, selectedCategory: "Category"))
+            ContentView()
             .tabItem {
                 Label(
                     title: { Text("List") },
                     icon: { Image(systemName: "list.clipboard") }
                 )
                 
-            }.badge(shopingData.data.count)
+            }
             SettingsView()
                 .tabItem {
                     Label(
@@ -31,5 +31,5 @@ struct TabBarView: View {
 }
 
 #Preview {
-    TabBarView(shopingData: ShoppingMockData())
+    TabBarView()
 }
