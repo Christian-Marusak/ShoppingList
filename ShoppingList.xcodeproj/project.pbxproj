@@ -82,12 +82,11 @@
 		9627E8432B065FF60000EE27 /* ShoppingList */ = {
 			isa = PBXGroup;
 			children = (
-				AA05495C2C36E18B0043F82B /* ListViewVM.swift */,
 				9627E8462B065FF60000EE27 /* ListView.swift */,
 				AAAF03BB2C602B5F0086E1E1 /* TabBarView.swift */,
 				AAAF03BD2C602FFB0086E1E1 /* SettingsView.swift */,
 				969D85032B0D2E6A002EE9AB /* CategorySelectorView.swift */,
-				AAC0C68A2C39F25100730E72 /* AddItemsVM.swift */,
+				AAF8E7252C6FA38F00052ADC /* ViewModels */,
 				96994F9C2B28B42200C376AC /* Components */,
 				960B06452B2B1B340097CC43 /* Model */,
 				969D84FF2B0D2A0A002EE9AB /* ShoppingListApp.swift */,
@@ -116,6 +115,15 @@
 				AA2B62682C63FC2D003DE324 /* EditItemsView.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		AAF8E7252C6FA38F00052ADC /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				AA05495C2C36E18B0043F82B /* ListViewVM.swift */,
+				AAC0C68A2C39F25100730E72 /* AddItemsVM.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

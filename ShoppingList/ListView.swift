@@ -19,19 +19,12 @@ struct ContentView: View {
             List(viewModel.data) { list in
                 ShoppingProduct(item: list)
                     .onTapGesture(count: 2, perform: {
-                        print("----------------------------")
-//                        print("Taping item \(list.item)")
-//                        print("Actual status \(list.bought)")
-                        print("----------------------------")
-//                        if let index = viewModel.data.firstIndex(where: {$0.id == list.id}) {
-//                            viewModel.data[index].bought.toggle()
-//                        }
+//                        viewModel.changeBought(id: list.id)
+                        viewModel.changeBought(id: list.id)
                     })
                     .swipeActions(edge: .leading, content: {
                         Button(role: .destructive,action: {
-                            if let index = viewModel.data.firstIndex(where: {$0.id == list.id}) {
-                                viewModel.removeData(index: IndexSet(integer: index))
-                            }
+                            viewModel.removeData(id: list.id)
                         }, label: {
                             Image(systemName: "trash.fill")
                         })

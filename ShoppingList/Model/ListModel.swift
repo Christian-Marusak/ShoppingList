@@ -69,4 +69,17 @@ final class ShoppingMockData {
         print("Deleting item \(itemsToRemove)")
         print("----------------------------")
     }
+    
+    func changeBought(at offsets: IndexSet) {
+        let itemToBuy = offsets.map {data[$0]}
+        print("----------------------------")
+        print("BEFORE change \(itemToBuy)")
+        for index in offsets {
+            data[index].bought.toggle()
+        }
+        
+        let boughtItem = offsets.map {data[$0]}
+        print("----------------------------")
+        print("AFTER change \(boughtItem)")
+    }
 }
