@@ -13,6 +13,7 @@ class ListViewVM {
     
     var isPresented: Bool = false
     var data: [ListModel] = []
+    var isHidden: Bool = false
     
     func loadData() {
         data = ShoppingMockData.shared.loadData()

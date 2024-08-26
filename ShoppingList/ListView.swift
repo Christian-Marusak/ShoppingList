@@ -62,8 +62,8 @@ struct ContentView: View {
                     Button {
                         print("Buttton")
                     } label:{
-                        Image(systemName: "eye")
-//                        Image(systemName: viewModel.isHidden ? "eye.slash" : "eye").animation(.interactiveSpring, value: viewModel.isHidden)
+//                        Image(systemName: "eye")
+                        Image(systemName: viewModel.isHidden ? "eye.slash" : "eye")
                     }
                 }
                 ToolbarItem(placement: .topBarTrailing) {
